@@ -125,9 +125,9 @@
     .services-top p { color: var(--muted); line-height: 1.9; font-size: 1rem; padding-top: .5rem; }
     .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
     .sv-card {
-      background: #fff; border: 1px solid #e8e5e0; border-radius: 20px;
+      background: #f5f5f5; border: 1px solid #eeeeee; border-radius: 20px;
       padding: 2.2rem; position: relative; overflow: hidden;
-      box-shadow: 0 2px 12px rgba(0,0,0,.06), 0 1px 3px rgba(0,0,0,.04);
+      box-shadow: 0 4px 20px rgba(0,0,0,.08);
       transition: transform .4s cubic-bezier(.34,1.56,.64,1), box-shadow .4s, border-color .4s;
       cursor: default;
     }
@@ -234,14 +234,16 @@
       width: 100%;
       border-radius: 20px;
       overflow: hidden;
-      border: 1px solid var(--border);
-      box-shadow: 0 16px 50px rgba(0,0,0,.09);
+      border: 2px solid rgba(230,57,70,.18);
+      box-shadow: 0 16px 50px rgba(0,0,0,.09), 0 0 0 4px rgba(230,57,70,.04);
+      background: #fff;
     }
     .zentime-wrap iframe {
       display: block;
       width: 100%;
       height: 720px;
       border: none;
+      filter: hue-rotate(0deg);
     }
 
     /* ══ REVIEWS ══ */
@@ -278,14 +280,15 @@
     table.hours { width: 100%; border-collapse: collapse; }
     table.hours tr { border-bottom: 1px solid rgba(255,255,255,.07); }
     table.hours tr:last-child { border: none; }
-    table.hours td { padding: 1rem 0; font-size: .92rem; color: rgba(255,255,255,.55); }
-    table.hours td:last-child { text-align: right; font-weight: 700; color: rgba(255,255,255,.85); }
-    table.hours tr.today td { color: var(--red) !important; }
+    table.hours td { padding: 1.2rem 0; font-size: 1.05rem; color: rgba(255,255,255,.6); line-height: 1.4; }
+    table.hours td:last-child { text-align: right; font-weight: 700; font-size: 1.05rem; color: rgba(255,255,255,.9); }
+    table.hours tr.today td { color: var(--red) !important; font-weight: 700; }
+    table.hours tr.today td:first-child::after { content: ' ◀ heute'; font-size: .7rem; font-weight: 600; opacity: .7; }
     .closed-d { color: rgba(255,255,255,.2) !important; font-weight: 400 !important; }
-    .hotline-card { margin-top: 2rem; background: rgba(230,57,70,.12); border: 1px solid rgba(230,57,70,.2); border-radius: 16px; padding: 1.4rem 1.6rem; display: flex; align-items: center; gap: 1rem; }
-    .hotline-card .hico { font-size: 1.5rem; }
-    .hotline-card strong { display: block; color: #fff; font-size: .95rem; }
-    .hotline-card span { color: rgba(255,255,255,.45); font-size: .82rem; }
+    .hotline-card { margin-top: 2rem; background: rgba(230,57,70,.12); border: 1px solid rgba(230,57,70,.2); border-radius: 16px; padding: 1.6rem 1.8rem; display: flex; align-items: center; gap: 1rem; }
+    .hotline-card .hico { font-size: 1.6rem; }
+    .hotline-card strong { display: block; color: #fff; font-size: 1rem; margin-bottom: .15rem; }
+    .hotline-card span { color: rgba(255,255,255,.45); font-size: .88rem; }
     .map-wrap { border-radius: 24px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,.3); border: 1px solid rgba(255,255,255,.07); }
     .map-wrap iframe { display: block; width: 100%; height: 460px; border: none; }
     .map-btns { display: flex; gap: .75rem; margin-top: 1rem; flex-wrap: wrap; }
