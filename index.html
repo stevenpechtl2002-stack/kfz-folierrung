@@ -532,7 +532,7 @@
           <div class="c-item"><div class="c-ico">🚨</div><div><div class="c-lbl">Notfall-Hotline 24/7</div><div class="c-val">0176 / 123 456 78</div></div></div>
         </div>
       </div>
-      <div class="zentime-wrap">
+      <div id="termin-widget" class="zentime-wrap">
         <iframe
           src="https://www.zentime.io/embed/kalender/13a0a8ef-6ac3-40ca-88a3-c3168a8e7b14"
           width="100%"
@@ -744,7 +744,7 @@
   // ── MOBILE: Termin-Buttons → externe URL ──
   if (window.matchMedia('(max-width: 768px)').matches) {
     document.querySelectorAll('a[href="#termin"]').forEach(a => {
-      a.href = 'https://zentime-website-test.vercel.app/#termin';
+      a.href = 'https://zentime-website-test.vercel.app/#termin-widget';
       a.target = '_self';
     });
   }
