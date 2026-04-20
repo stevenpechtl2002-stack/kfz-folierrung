@@ -25,7 +25,7 @@
     }
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
     html { scroll-behavior: smooth; }
-    body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+    body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; font-size: 17px; }
     ::-webkit-scrollbar { width: 3px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: var(--red); border-radius: 2px; }
@@ -49,7 +49,7 @@
     .logo em { color: var(--red); font-style: normal; }
     nav.scrolled .logo { color: var(--text); }
     .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-    .nav-links a { color: rgba(255,255,255,.7); text-decoration: none; font-size: .82rem; font-weight: 600; letter-spacing: .5px; text-transform: uppercase; transition: color .3s; position: relative; }
+    .nav-links a { color: rgba(255,255,255,.7); text-decoration: none; font-size: .88rem; font-weight: 600; letter-spacing: .5px; text-transform: uppercase; transition: color .3s; position: relative; }
     .nav-links a::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:2px; background:var(--red); transition:width .3s; border-radius:2px; }
     .nav-links a:hover { color: #fff; }
     .nav-links a:hover::after { width: 100%; }
@@ -116,7 +116,7 @@
     .s-eyebrow { display: flex; align-items: center; gap: .75rem; margin-bottom: .75rem; }
     .s-eyebrow-line { width: 24px; height: 2px; background: var(--red); border-radius: 2px; }
     .s-label { color: var(--red); font-size: .72rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
-    .s-title { font-size: clamp(2.2rem, 4vw, 3.4rem); font-weight: 900; line-height: 1.05; letter-spacing: -1.5px; }
+    .s-title { font-size: clamp(2.4rem, 4vw, 3.6rem); font-weight: 900; line-height: 1.05; letter-spacing: -1.5px; }
     .s-title em { color: var(--red); font-style: normal; }
 
     /* ══ SERVICES ══ */
@@ -137,8 +137,8 @@
     .sv-num { font-size: .72rem; font-weight: 700; color: var(--red); letter-spacing: 1px; margin-bottom: 1.5rem; opacity: .6; }
     .sv-icon { font-size: 2.6rem; margin-bottom: 1.3rem; display: block; transition: transform .35s cubic-bezier(.34,1.56,.64,1); }
     .sv-card:hover .sv-icon { transform: scale(1.25) rotate(-8deg); }
-    .sv-card h3 { font-size: 1.12rem; font-weight: 800; margin-bottom: .7rem; line-height: 1.3; }
-    .sv-card p { font-size: .92rem; color: var(--muted); line-height: 1.8; }
+    .sv-card h3 { font-size: 1.18rem; font-weight: 800; margin-bottom: .7rem; line-height: 1.3; }
+    .sv-card p { font-size: .97rem; color: var(--muted); line-height: 1.85; }
     .sv-price { display: inline-flex; align-items: center; gap: .4rem; margin-top: 1.3rem; background: rgba(230,57,70,.08); color: var(--red); padding: .35rem .9rem; border-radius: 50px; font-size: .78rem; font-weight: 700; }
     .sv-arrow { position: absolute; bottom: 1.8rem; right: 1.8rem; width: 32px; height: 32px; background: var(--text); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: .8rem; opacity: 0; transform: scale(.6); transition: all .3s; }
     .sv-card:hover .sv-arrow { opacity: 1; transform: scale(1); }
