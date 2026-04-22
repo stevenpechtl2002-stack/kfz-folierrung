@@ -9,7 +9,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <style>
     :root {
       --red: #e63946;
@@ -601,7 +600,7 @@
 
 <!-- ÜBER UNS -->
 <section id="ueber-uns">
-  <canvas id="ueber-uns-canvas"></canvas>
+  <div id="ueber-uns-canvas"></div>
   <div class="container">
     <div class="about-grid">
       <div class="about-imgs">
@@ -872,101 +871,88 @@
     card.addEventListener('mouseleave', () => gsap.to(card.querySelector('.sv-num'), { opacity:.6, duration:.3 }));
   });
 
-  // ── ÜBER UNS – Background Paper Shaders (Three.js, 1:1 from 21st.dev) ──
-  (function() {
-    const section = document.getElementById('ueber-uns');
-    const canvas  = document.getElementById('ueber-uns-canvas');
+  // ── ÜBER UNS – Ethereal Shadow (1:1 port of etheral-shadow.tsx) ──
+  (function () {
+    const el = document.getElementById('ueber-uns-canvas');
+    el.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden;';
 
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setClearColor(0x000000, 0);
-
-    const scene  = new THREE.Scene();
-    const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 10);
-    camera.position.z = 1;
-
-    // ── exact vertex + fragment shaders from the component ──
-    const vertexShader = `
-      uniform float time;
-      uniform float intensity;
-      varying vec2 vUv;
-      varying vec3 vPosition;
-      void main() {
-        vUv = uv;
-        vPosition = position;
-        vec3 pos = position;
-        pos.y += sin(pos.x * 10.0 + time) * 0.1 * intensity;
-        pos.x += cos(pos.y * 8.0 + time * 1.5) * 0.05 * intensity;
-        gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
-      }
-    `;
-    const fragmentShader = `
-      uniform float time;
-      uniform float intensity;
-      uniform vec3 color1;
-      uniform vec3 color2;
-      varying vec2 vUv;
-      void main() {
-        vec2 uv = vUv;
-        float noise = sin(uv.x * 20.0 + time) * cos(uv.y * 15.0 + time * 0.8);
-        noise += sin(uv.x * 35.0 - time * 2.0) * cos(uv.y * 25.0 + time * 1.2) * 0.5;
-        vec3 color = mix(color1, color2, noise * 0.5 + 0.5);
-        color = mix(color, vec3(1.0), pow(abs(noise), 2.0) * intensity);
-        float glow = 1.0 - length(uv - 0.5) * 2.0;
-        glow = pow(max(glow, 0.0), 2.0);
-        gl_FragColor = vec4(color * glow, glow * 0.8);
-      }
-    `;
-
-    // ── ShaderPlane ──
-    const uniforms = {
-      time:      { value: 0 },
-      intensity: { value: 1.0 },
-      color1:    { value: new THREE.Color('#808080') },
-      color2:    { value: new THREE.Color('#ffffff') },
-    };
-    const plane = new THREE.Mesh(
-      new THREE.PlaneGeometry(2, 2, 32, 32),
-      new THREE.ShaderMaterial({ uniforms, vertexShader, fragmentShader, transparent: true, side: THREE.DoubleSide })
-    );
-    scene.add(plane);
-
-    // ── EnergyRings ──
-    const rings = [
-      { r: 0.5,  pos: [ 0.3, 0.0, 0] },
-      { r: 0.75, pos: [-0.2, 0.1, 0] },
-      { r: 0.35, pos: [ 0.5,-0.2, 0] },
-    ].map(({ r, pos }) => {
-      const mat  = new THREE.MeshBasicMaterial({ color: '#808080', transparent: true, opacity: 0.4, side: THREE.DoubleSide });
-      const mesh = new THREE.Mesh(new THREE.RingGeometry(r * 0.8, r, 64), mat);
-      mesh.position.set(...pos);
-      scene.add(mesh);
-      return { mesh, mat };
-    });
-
-    function resize() {
-      const w = section.offsetWidth, h = section.offsetHeight;
-      renderer.setSize(w, h);
+    // Demo props: animation={scale:100,speed:90}, noise={opacity:1,scale:1.2}, color='rgba(128,128,128,1)'
+    function mapRange(v, a, b, c, d) {
+      return c + ((v - a) / (b - a)) * (d - c);
     }
-    resize();
-    window.addEventListener('resize', resize);
+    const scale = 100, speed = 90;
+    const displacementScale = mapRange(scale, 1, 100, 20, 100);          // → 100
+    const animationDuration = mapRange(speed, 1, 100, 1000, 50) / 25;   // → ~5.8 s per 360°
+    const freqX = mapRange(scale, 0, 100, 0.001, 0.0005).toFixed(6);    // → 0.0005
+    const freqY = mapRange(scale, 0, 100, 0.004, 0.002).toFixed(6);     // → 0.002
+    const noiseOpacity = 1 / 2;      // noise.opacity / 2
+    const noiseSize    = 1.2 * 200;  // noise.scale * 200 → 240 px
 
+    const id = 'eth' + Math.random().toString(36).slice(2, 8);
+
+    // wrapper displaced by SVG filter + blur
+    const wrap = document.createElement('div');
+    wrap.style.cssText = `position:absolute;inset:-${displacementScale}px;filter:url(#${id}) blur(4px);`;
+
+    // SVG filter (zero-size host)
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.style.cssText = 'position:absolute;width:0;height:0';
+    svg.innerHTML = `
+      <defs>
+        <filter id="${id}">
+          <feTurbulence result="undulation" numOctaves="2"
+            baseFrequency="${freqX},${freqY}" seed="0" type="turbulence"/>
+          <feColorMatrix id="${id}hue" in="undulation" type="hueRotate" values="180"/>
+          <feColorMatrix in="dist" result="circulation" type="matrix"
+            values="4 0 0 0 1  4 0 0 0 1  4 0 0 0 1  1 0 0 0 0"/>
+          <feDisplacementMap in="SourceGraphic" in2="circulation"
+            scale="${displacementScale}" result="dist"/>
+          <feDisplacementMap in="dist" in2="undulation"
+            scale="${displacementScale}" result="output"/>
+        </filter>
+      </defs>`;
+    wrap.appendChild(svg);
+
+    // blob div – backgroundColor + maskImage (exact from component)
+    const blob = document.createElement('div');
+    blob.style.cssText = `
+      width:100%; height:100%;
+      background-color: rgba(128,128,128,1);
+      -webkit-mask-image: url('https://framerusercontent.com/images/ceBGguIpUU8luwByxuQz79t7To.png');
+      mask-image:         url('https://framerusercontent.com/images/ceBGguIpUU8luwByxuQz79t7To.png');
+      -webkit-mask-size: cover; mask-size: cover;
+      -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+      -webkit-mask-position: center; mask-position: center;`;
+    wrap.appendChild(blob);
+    el.appendChild(wrap);
+
+    // noise overlay (exact from component)
+    const noise = document.createElement('div');
+    noise.style.cssText = `
+      position:absolute; inset:0;
+      background-image: url('https://framerusercontent.com/images/g0QcWrxr87K0ufOxIUFBakwYA8.png');
+      background-size: ${noiseSize}px;
+      background-repeat: repeat;
+      opacity: ${noiseOpacity};`;
+    el.appendChild(noise);
+
+    // animate hueRotate: 0→360 in animationDuration seconds, looping
+    const hueEl = svg.querySelector(`[id="${id}hue"]`);
+    let hue = 0;
+    let last = null;
     let active = false;
-    new IntersectionObserver(e => { active = e[0].isIntersecting; }, { threshold: 0.05 }).observe(section);
+    new IntersectionObserver(e => { active = e[0].isIntersecting; }, { threshold: 0.05 })
+      .observe(document.getElementById('ueber-uns'));
 
-    const clock = new THREE.Clock();
-    (function loop() {
+    function loop(ts) {
       requestAnimationFrame(loop);
-      if (!active) return;
-      const t = clock.getElapsedTime();
-      uniforms.time.value      = t;
-      uniforms.intensity.value = 1.0 + Math.sin(t * 2) * 0.3;
-      rings.forEach(({ mesh, mat }, i) => {
-        mesh.rotation.z = t * (0.4 + i * 0.2);
-        mat.opacity = 0.2 + Math.sin(t * 3 + i) * 0.15;
-      });
-      renderer.render(scene, camera);
-    })();
+      if (!active) { last = null; return; }
+      const dt = last ? (ts - last) / 1000 : 0;
+      last = ts;
+      hue = (hue + (360 / animationDuration) * dt) % 360;
+      if (hueEl) hueEl.setAttribute('values', hue.toFixed(2));
+    }
+    requestAnimationFrame(loop);
   })();
 
   // ── GLOW CARDS ──
