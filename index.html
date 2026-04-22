@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <style>
     :root {
       --red: #e63946;
@@ -600,7 +601,7 @@
 
 <!-- ÜBER UNS -->
 <section id="ueber-uns">
-  <div id="ueber-uns-canvas"></div>
+  <canvas id="ueber-uns-canvas"></canvas>
   <div class="container">
     <div class="about-grid">
       <div class="about-imgs">
@@ -871,70 +872,100 @@
     card.addEventListener('mouseleave', () => gsap.to(card.querySelector('.sv-num'), { opacity:.6, duration:.3 }));
   });
 
-  // ── ÜBER UNS ETHEREAL SHADOW BACKGROUND ──
+  // ── ÜBER UNS – Background Paper Shaders (Three.js, 1:1 from 21st.dev) ──
   (function() {
     const section = document.getElementById('ueber-uns');
-    const el = document.getElementById('ueber-uns-canvas');
-    el.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden;';
+    const canvas  = document.getElementById('ueber-uns-canvas');
 
-    const id = 'eth-' + Math.random().toString(36).slice(2);
-    const D = 100;
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setClearColor(0x000000, 0);
 
-    // Inline SVG with filter + blob mask shape (no external URL needed)
-    const svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
-    svg.style.cssText = 'position:absolute;width:0;height:0;overflow:visible';
-    svg.innerHTML = `
-      <defs>
-        <filter id="${id}" x="-40%" y="-40%" width="180%" height="180%" color-interpolation-filters="sRGB">
-          <feTurbulence result="undulation" numOctaves="2" baseFrequency="0.0005,0.002" seed="0" type="turbulence"/>
-          <feColorMatrix id="${id}-hue" in="undulation" type="hueRotate" values="0"/>
-          <feColorMatrix in="dist" result="circulation" type="matrix" values="4 0 0 0 1  4 0 0 0 1  4 0 0 0 1  1 0 0 0 0"/>
-          <feDisplacementMap in="SourceGraphic" in2="circulation" scale="${D}" result="dist"/>
-          <feDisplacementMap in="dist" in2="undulation" scale="${D}" result="output"/>
-        </filter>
-        <radialGradient id="${id}-blob1" cx="60%" cy="50%" r="40%">
-          <stop offset="0%" stop-color="rgba(200,200,200,1)"/>
-          <stop offset="70%" stop-color="rgba(140,140,140,0.6)"/>
-          <stop offset="100%" stop-color="rgba(80,80,80,0)"/>
-        </radialGradient>
-        <radialGradient id="${id}-blob2" cx="35%" cy="55%" r="30%">
-          <stop offset="0%" stop-color="rgba(180,180,180,0.9)"/>
-          <stop offset="60%" stop-color="rgba(100,100,100,0.4)"/>
-          <stop offset="100%" stop-color="rgba(50,50,50,0)"/>
-        </radialGradient>
-      </defs>
+    const scene  = new THREE.Scene();
+    const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 10);
+    camera.position.z = 1;
+
+    // ── exact vertex + fragment shaders from the component ──
+    const vertexShader = `
+      uniform float time;
+      uniform float intensity;
+      varying vec2 vUv;
+      varying vec3 vPosition;
+      void main() {
+        vUv = uv;
+        vPosition = position;
+        vec3 pos = position;
+        pos.y += sin(pos.x * 10.0 + time) * 0.1 * intensity;
+        pos.x += cos(pos.y * 8.0 + time * 1.5) * 0.05 * intensity;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+      }
     `;
-    el.appendChild(svg);
-
-    // Blob SVG layer (displaced by filter)
-    const blobSvg = document.createElementNS('http://www.w3.org/2000/svg','svg');
-    blobSvg.setAttribute('xmlns','http://www.w3.org/2000/svg');
-    blobSvg.style.cssText = `position:absolute;inset:-${D}px;width:calc(100% + ${D*2}px);height:calc(100% + ${D*2}px);filter:url(#${id}) blur(4px);`;
-    blobSvg.innerHTML = `
-      <ellipse cx="60%" cy="50%" rx="38%" ry="44%" fill="url(#${id}-blob1)"/>
-      <ellipse cx="35%" cy="55%" rx="28%" ry="32%" fill="url(#${id}-blob2)"/>
+    const fragmentShader = `
+      uniform float time;
+      uniform float intensity;
+      uniform vec3 color1;
+      uniform vec3 color2;
+      varying vec2 vUv;
+      void main() {
+        vec2 uv = vUv;
+        float noise = sin(uv.x * 20.0 + time) * cos(uv.y * 15.0 + time * 0.8);
+        noise += sin(uv.x * 35.0 - time * 2.0) * cos(uv.y * 25.0 + time * 1.2) * 0.5;
+        vec3 color = mix(color1, color2, noise * 0.5 + 0.5);
+        color = mix(color, vec3(1.0), pow(abs(noise), 2.0) * intensity);
+        float glow = 1.0 - length(uv - 0.5) * 2.0;
+        glow = pow(max(glow, 0.0), 2.0);
+        gl_FragColor = vec4(color * glow, glow * 0.8);
+      }
     `;
-    el.appendChild(blobSvg);
 
-    // Noise overlay (CSS grain)
-    const noise = document.createElement('div');
-    noise.style.cssText = `
-      position:absolute;inset:0;
-      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      background-size:200px;opacity:0.07;
-    `;
-    el.appendChild(noise);
+    // ── ShaderPlane ──
+    const uniforms = {
+      time:      { value: 0 },
+      intensity: { value: 1.0 },
+      color1:    { value: new THREE.Color('#808080') },
+      color2:    { value: new THREE.Color('#ffffff') },
+    };
+    const plane = new THREE.Mesh(
+      new THREE.PlaneGeometry(2, 2, 32, 32),
+      new THREE.ShaderMaterial({ uniforms, vertexShader, fragmentShader, transparent: true, side: THREE.DoubleSide })
+    );
+    scene.add(plane);
 
-    // Animate hue
-    const hueEl = document.getElementById(id + '-hue');
-    let hue = 0;
+    // ── EnergyRings ──
+    const rings = [
+      { r: 0.5,  pos: [ 0.3, 0.0, 0] },
+      { r: 0.75, pos: [-0.2, 0.1, 0] },
+      { r: 0.35, pos: [ 0.5,-0.2, 0] },
+    ].map(({ r, pos }) => {
+      const mat  = new THREE.MeshBasicMaterial({ color: '#808080', transparent: true, opacity: 0.4, side: THREE.DoubleSide });
+      const mesh = new THREE.Mesh(new THREE.RingGeometry(r * 0.8, r, 64), mat);
+      mesh.position.set(...pos);
+      scene.add(mesh);
+      return { mesh, mat };
+    });
+
+    function resize() {
+      const w = section.offsetWidth, h = section.offsetHeight;
+      renderer.setSize(w, h);
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
     let active = false;
     new IntersectionObserver(e => { active = e[0].isIntersecting; }, { threshold: 0.05 }).observe(section);
+
+    const clock = new THREE.Clock();
     (function loop() {
       requestAnimationFrame(loop);
       if (!active) return;
-      hue = (hue + 1.03) % 360;
-      hueEl && hueEl.setAttribute('values', hue.toFixed(1));
+      const t = clock.getElapsedTime();
+      uniforms.time.value      = t;
+      uniforms.intensity.value = 1.0 + Math.sin(t * 2) * 0.3;
+      rings.forEach(({ mesh, mat }, i) => {
+        mesh.rotation.z = t * (0.4 + i * 0.2);
+        mat.opacity = 0.2 + Math.sin(t * 3 + i) * 0.15;
+      });
+      renderer.render(scene, camera);
     })();
   })();
 
