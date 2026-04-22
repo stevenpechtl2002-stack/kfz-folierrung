@@ -140,13 +140,10 @@
       --hue: calc(var(--base) + (var(--xp, 0) * var(--spread)));
       background-image: radial-gradient(
         var(--spotlight-size) var(--spotlight-size) at
-        calc(var(--x, -999) * 1px) calc(var(--y, -999) * 1px),
-        hsl(var(--hue) 100% 70% / 0.08), transparent
+        calc(var(--lx, -999) * 1px) calc(var(--ly, -999) * 1px),
+        hsl(var(--hue) 100% 70% / 0.12), transparent
       );
       background-color: var(--backdrop);
-      background-size: calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)));
-      background-position: 50% 50%;
-      background-attachment: fixed;
       border: var(--border-size) solid var(--backup-border);
       border-radius: 20px;
       padding: 2.2rem;
@@ -163,7 +160,6 @@
       inset: calc(var(--border-size) * -1);
       border: var(--border-size) solid transparent;
       border-radius: calc(var(--radius) * 1px);
-      background-attachment: fixed;
       background-size: calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)));
       background-repeat: no-repeat;
       background-position: 50% 50%;
@@ -174,7 +170,7 @@
     .sv-card::before {
       background-image: radial-gradient(
         calc(var(--spotlight-size) * 0.75) calc(var(--spotlight-size) * 0.75) at
-        calc(var(--x, -999) * 1px) calc(var(--y, -999) * 1px),
+        calc(var(--lx, -999) * 1px) calc(var(--ly, -999) * 1px),
         hsl(var(--hue) 100% 50% / 1), transparent 100%
       );
       filter: brightness(2);
@@ -182,7 +178,7 @@
     .sv-card::after {
       background-image: radial-gradient(
         calc(var(--spotlight-size) * 0.5) calc(var(--spotlight-size) * 0.5) at
-        calc(var(--x, -999) * 1px) calc(var(--y, -999) * 1px),
+        calc(var(--lx, -999) * 1px) calc(var(--ly, -999) * 1px),
         hsl(0 100% 100% / 1), transparent 100%
       );
     }
@@ -854,13 +850,19 @@
   });
 
   // ── GLOW CARDS ──
-  document.addEventListener('pointermove', (e) => {
-    const { clientX: x, clientY: y } = e;
-    const xp = (x / window.innerWidth).toFixed(4);
-    document.querySelectorAll('.sv-card').forEach(card => {
-      card.style.setProperty('--x', x.toFixed(2));
-      card.style.setProperty('--y', y.toFixed(2));
+  document.querySelectorAll('.sv-card').forEach(card => {
+    card.addEventListener('pointermove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const lx = e.clientX - rect.left;
+      const ly = e.clientY - rect.top;
+      const xp = (lx / rect.width).toFixed(4);
+      card.style.setProperty('--lx', lx.toFixed(2));
+      card.style.setProperty('--ly', ly.toFixed(2));
       card.style.setProperty('--xp', xp);
+    });
+    card.addEventListener('pointerleave', () => {
+      card.style.setProperty('--lx', '-999');
+      card.style.setProperty('--ly', '-999');
     });
   });
 
