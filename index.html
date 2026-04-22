@@ -11,9 +11,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <style>
     :root {
-      --red: #e63946;
-      --red-dark: #b91c2c;
-      --red-glow: rgba(230,57,70,.28);
+      --red: #4ade80;
+      --red-dark: #22c55e;
+      --red-glow: rgba(74,222,128,.25);
       --bg: #0d0d0d;
       --bg2: #111111;
       --card: #161616;
@@ -30,7 +30,7 @@
     #start { scroll-snap-align: none; }
     ::-webkit-scrollbar { width: 3px; }
     ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: var(--red); border-radius: 2px; }
+    ::-webkit-scrollbar-thumb { background: var(--red-dark); border-radius: 2px; }
 
     /* ══ NAV ══ */
     nav {
@@ -94,7 +94,7 @@
     .hero-sub { margin-top: 2rem; font-size: 1rem; color: rgba(255,255,255,.5); line-height: 1.9; max-width: 460px; opacity: 0; font-weight: 300; letter-spacing: .04em; }
     .hero-actions { display: flex; gap: 1rem; margin-top: 2.5rem; opacity: 0; flex-wrap: wrap; }
     .btn-red { background: var(--red); color: #fff; border: none; padding: 1rem 2.8rem; border-radius: 2px; font-weight: 500; font-size: .72rem; letter-spacing: 2.5px; text-transform: uppercase; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: .6rem; transition: all .25s; box-shadow: 0 8px 24px var(--red-glow); font-family: inherit; }
-    .btn-red:hover { background: var(--red-dark); transform: translateY(-3px); box-shadow: 0 16px 36px rgba(230,57,70,.45); }
+    .btn-red:hover { background: var(--red-dark); transform: translateY(-3px); box-shadow: 0 16px 36px rgba(74,222,128,.45); }
     .btn-outline-white { background: transparent; color: rgba(255,255,255,.7); border: 1px solid rgba(255,255,255,.25); padding: 1rem 2.8rem; border-radius: 2px; font-weight: 400; font-size: .72rem; letter-spacing: 2.5px; text-transform: uppercase; cursor: pointer; text-decoration: none; display: inline-block; transition: all .25s; font-family: inherit; }
     .btn-outline-white:hover { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.5); color: #fff; transform: translateY(-3px); }
     .hero-stats { display: flex; gap: 0; margin-top: 3rem; opacity: 0; }
@@ -198,12 +198,65 @@
       filter: blur(calc(var(--border-size) * 10));
       background: none; pointer-events: none;
     }
+    /* Shared GlowCard mixin for all card types */
+    .glow-card {
+      --base: 130;
+      --spread: 60;
+      --radius: 16;
+      --border: 1;
+      --backdrop: hsl(0 0% 7% / 0.95);
+      --backup-border: rgba(255,255,255,0.07);
+      --size: 200;
+      --outer: 1;
+      --border-size: calc(var(--border) * 1px);
+      --spotlight-size: calc(var(--size) * 1px);
+      --hue: calc(var(--base) + (var(--xp, 0) * var(--spread)));
+      background-image: radial-gradient(
+        var(--spotlight-size) var(--spotlight-size) at
+        calc(var(--lx, -999) * 1px) calc(var(--ly, -999) * 1px),
+        hsl(var(--hue) 80% 65% / 0.10), transparent
+      );
+      background-color: var(--backdrop);
+      position: relative;
+      touch-action: none;
+      overflow: hidden;
+    }
+    .glow-card::before,
+    .glow-card::after {
+      pointer-events: none;
+      content: "";
+      position: absolute;
+      inset: calc(var(--border-size) * -1);
+      border: var(--border-size) solid transparent;
+      border-radius: calc(var(--radius) * 1px);
+      background-size: calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)));
+      background-repeat: no-repeat;
+      background-position: 50% 50%;
+      mask: linear-gradient(transparent, transparent), linear-gradient(white, white);
+      mask-clip: padding-box, border-box;
+      mask-composite: intersect;
+    }
+    .glow-card::before {
+      background-image: radial-gradient(
+        calc(var(--spotlight-size) * 0.75) calc(var(--spotlight-size) * 0.75) at
+        calc(var(--lx, -999) * 1px) calc(var(--ly, -999) * 1px),
+        hsl(var(--hue) 80% 55% / 1), transparent 100%
+      );
+      filter: brightness(2);
+    }
+    .glow-card::after {
+      background-image: radial-gradient(
+        calc(var(--spotlight-size) * 0.5) calc(var(--spotlight-size) * 0.5) at
+        calc(var(--lx, -999) * 1px) calc(var(--ly, -999) * 1px),
+        hsl(0 100% 100% / 1), transparent 100%
+      );
+    }
     .sv-num { font-size: .72rem; font-weight: 700; color: var(--red); letter-spacing: 1px; margin-bottom: 1.5rem; opacity: .6; }
     .sv-icon { font-size: 2.6rem; margin-bottom: 1.3rem; display: block; transition: transform .35s cubic-bezier(.34,1.56,.64,1); }
     .sv-card:hover .sv-icon { transform: scale(1.25) rotate(-8deg); }
     .sv-card h3 { font-size: 1.4rem; font-weight: 400; margin-bottom: .7rem; line-height: 1.3; color: #fff; font-family: 'Cormorant', Georgia, serif; letter-spacing: .04em; }
     .sv-card p { font-size: .97rem; color: rgba(255,255,255,.45); line-height: 1.85; }
-    .sv-price { display: inline-flex; align-items: center; gap: .4rem; margin-top: 1.3rem; background: rgba(230,57,70,.15); color: var(--red); padding: .35rem .9rem; border-radius: 50px; font-size: .78rem; font-weight: 700; }
+    .sv-price { display: inline-flex; align-items: center; gap: .4rem; margin-top: 1.3rem; background: rgba(74,222,128,.15); color: var(--red); padding: .35rem .9rem; border-radius: 50px; font-size: .78rem; font-weight: 700; }
     .sv-arrow { position: absolute; bottom: 1.8rem; right: 1.8rem; width: 32px; height: 32px; background: var(--red); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: .8rem; opacity: 0; transform: scale(.6); transition: all .3s; }
     .sv-card:hover .sv-arrow { opacity: 1; transform: scale(1); }
 
@@ -214,7 +267,7 @@
       background: url('https://images.unsplash.com/photo-1614026480209-cd9934144671?w=1800&q=85') center/cover no-repeat;
       filter: brightness(.18) saturate(.6);
     }
-    #vorteile::before { content:''; position:absolute; top:-200px; right:-200px; width:600px; height:600px; background:radial-gradient(circle, rgba(230,57,70,.18) 0%, transparent 65%); pointer-events:none; z-index:1; }
+    #vorteile::before { content:''; position:absolute; top:-200px; right:-200px; width:600px; height:600px; background:radial-gradient(circle, rgba(74,222,128,.18) 0%, transparent 65%); pointer-events:none; z-index:1; }
     #vorteile .container { position: relative; z-index: 2; }
     .vorteile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
     .vorteile-left .s-title { color: #fff; }
@@ -222,9 +275,9 @@
     .vorteile-left p { color: rgba(255,255,255,.45); line-height: 1.85; font-size: .95rem; margin-top: 1.2rem; max-width: 420px; }
     .vorteile-big-num { font-size: 9rem; font-weight: 900; color: var(--red); line-height: 1; letter-spacing: -5px; margin-top: 2rem; opacity: .15; }
     .vorteile-items { display: flex; flex-direction: column; gap: 1rem; }
-    .v-item { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.07); border-radius: 16px; padding: 1.5rem; display: flex; gap: 1.2rem; align-items: flex-start; transition: background .3s, border-color .3s, transform .3s; }
-    .v-item:hover { background: rgba(255,255,255,.07); border-color: rgba(230,57,70,.3); transform: translateX(6px); }
-    .v-icon { width: 44px; height: 44px; background: rgba(230,57,70,.15); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+    .v-item { background-color: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.07); border-radius: 16px; padding: 1.5rem; display: flex; gap: 1.2rem; align-items: flex-start; transition: background-color .3s, border-color .3s, transform .3s; }
+    .v-item:hover { background-color: rgba(255,255,255,.07); border-color: rgba(74,222,128,.3); transform: translateX(6px); }
+    .v-icon { width: 44px; height: 44px; background: rgba(74,222,128,.15); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
     .v-item h4 { font-size: .95rem; font-weight: 700; color: #fff; margin-bottom: .3rem; }
     .v-item p { font-size: .85rem; color: rgba(255,255,255,.4); line-height: 1.6; }
 
@@ -242,7 +295,7 @@
       position: absolute; top: 2.5rem; left: -1.5rem;
       background: var(--red); color: #fff;
       padding: 1rem 1.4rem; border-radius: 18px;
-      text-align: center; box-shadow: 0 16px 40px rgba(230,57,70,.4);
+      text-align: center; box-shadow: 0 16px 40px rgba(74,222,128,.4);
       animation: floatY 3.5s ease-in-out infinite;
       font-family: inherit;
     }
@@ -253,7 +306,7 @@
     .about-text p { color: var(--muted); line-height: 1.9; font-size: .95rem; margin-bottom: 1rem; }
     .about-checks { display: flex; flex-direction: column; gap: .65rem; margin-top: 1.75rem; }
     .about-check { display: flex; align-items: center; gap: .85rem; font-size: .9rem; font-weight: 500; }
-    .check-icon { width: 22px; height: 22px; background: rgba(230,57,70,.1); color: var(--red); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: .68rem; font-weight: 900; flex-shrink: 0; }
+    .check-icon { width: 22px; height: 22px; background: rgba(74,222,128,.1); color: var(--red); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: .68rem; font-weight: 900; flex-shrink: 0; }
 
     /* ══ GALLERY ══ */
     #galerie { background: #111; padding: 6rem 5rem; }
@@ -272,25 +325,26 @@
     .booking-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
     .booking-left p { color: rgba(255,255,255,.45); line-height: 1.85; margin-top: 1rem; margin-bottom: 2rem; font-size: .95rem; }
     .c-items { display: flex; flex-direction: column; gap: .8rem; }
-    .c-item { display: flex; align-items: center; gap: 1rem; background: #141414; border: 1px solid #222; border-radius: 14px; padding: 1rem 1.2rem; transition: all .25s; }
-    .c-item:hover { border-color: rgba(230,57,70,.3); transform: translateX(5px); box-shadow: 0 8px 24px rgba(0,0,0,.4); }
-    .c-ico { width: 40px; height: 40px; background: rgba(230,57,70,.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+    .c-item { display: flex; align-items: center; gap: 1rem; background-color: #141414; border: 1px solid #222; border-radius: 14px; padding: 1rem 1.2rem; transition: background-image .25s, border-color .25s, transform .25s, box-shadow .25s; }
+    .c-item:hover { border-color: rgba(74,222,128,.3); transform: translateX(5px); box-shadow: 0 8px 24px rgba(0,0,0,.4); }
+    .c-ico { width: 40px; height: 40px; background: rgba(74,222,128,.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
     .c-lbl { font-size: .72rem; color: rgba(255,255,255,.4); }
     .c-val { font-size: .92rem; font-weight: 700; color: #fff; }
     .booking-widget-box {
-      background: #141414; border: 1px solid #222;
+      --radius: 28; --size: 350;
+      background-color: #141414; border: 1px solid #222;
       border-radius: 28px; padding: 3.5rem 3rem;
       display: flex; flex-direction: column; align-items: center;
       text-align: center; gap: 1.5rem;
       position: relative; overflow: hidden;
     }
-    .bwb-glow { position: absolute; top: -80px; left: 50%; transform: translateX(-50%); width: 300px; height: 200px; background: radial-gradient(ellipse, rgba(230,57,70,.1), transparent 70%); pointer-events: none; }
-    .bwb-icon { width: 72px; height: 72px; background: linear-gradient(135deg, var(--red), #ff6b35); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 2rem; box-shadow: 0 16px 40px rgba(230,57,70,.3); }
+    .bwb-glow { position: absolute; top: -80px; left: 50%; transform: translateX(-50%); width: 300px; height: 200px; background: radial-gradient(ellipse, rgba(74,222,128,.1), transparent 70%); pointer-events: none; }
+    .bwb-icon { width: 72px; height: 72px; background: linear-gradient(135deg, var(--red), #86efac); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 2rem; box-shadow: 0 16px 40px rgba(74,222,128,.3); }
     .booking-widget-box h3 { font-size: 2rem; font-weight: 400; letter-spacing: .04em; color: #fff; font-family: 'Cormorant', Georgia, serif; }
     .booking-widget-box > p { color: rgba(255,255,255,.45); line-height: 1.75; font-size: .92rem; max-width: 320px; }
     .bw-steps { display: flex; flex-direction: column; gap: .7rem; width: 100%; }
-    .bw-step { display: flex; align-items: center; gap: 1rem; background: #1a1a1a; border: 1px solid #272727; border-radius: 12px; padding: .9rem 1.2rem; font-size: .88rem; font-weight: 600; text-align: left; transition: border-color .2s; color: rgba(255,255,255,.8); }
-    .bw-step:hover { border-color: rgba(230,57,70,.25); }
+    .bw-step { display: flex; align-items: center; gap: 1rem; background-color: #1a1a1a; border: 1px solid #272727; border-radius: 12px; padding: .9rem 1.2rem; font-size: .88rem; font-weight: 600; text-align: left; transition: border-color .2s; color: rgba(255,255,255,.8); }
+    .bw-step:hover { border-color: rgba(74,222,128,.25); }
     .bw-step span { width: 26px; height: 26px; background: var(--red); color: #fff; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: .72rem; font-weight: 800; flex-shrink: 0; }
     .bw-btn { width: 100%; background: var(--text); color: #fff; border: none; padding: 1rem; border-radius: 14px; font-size: .95rem; font-weight: 800; cursor: pointer; letter-spacing: .3px; transition: all .25s; font-family: inherit; position: relative; overflow: hidden; }
     .bw-btn::after { content:''; position:absolute; inset:0; background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent); transform:translateX(-100%); transition:transform .5s; }
@@ -319,12 +373,13 @@
     @keyframes scrollUp { from { transform: translateY(0) } to { transform: translateY(-50%) } }
 
     .t-card {
-      background: #141414; border: 1px solid #222; border-radius: 24px;
+      --radius: 24; --size: 180;
+      background-color: #141414; border: 1px solid #222; border-radius: 24px;
       padding: 1.8rem; flex-shrink: 0;
-      box-shadow: 0 4px 20px rgba(230,57,70,.05);
+      box-shadow: 0 4px 20px rgba(74,222,128,.05);
       transition: border-color .3s;
     }
-    .t-card:hover { border-color: rgba(230,57,70,.25); }
+    .t-card:hover { border-color: rgba(74,222,128,.25); }
     .t-card-text { color: rgba(255,255,255,.6); font-size: .9rem; line-height: 1.75; }
     .t-card-person { display: flex; align-items: center; gap: .75rem; margin-top: 1.2rem; }
     .t-card-person img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
@@ -349,7 +404,7 @@
     table.hours tr.today td { color: var(--red) !important; font-weight: 700; }
     table.hours tr.today td:first-child::after { content: ' ◀ heute'; font-size: .7rem; font-weight: 600; opacity: .7; }
     .closed-d { color: rgba(255,255,255,.2) !important; font-weight: 400 !important; }
-    .hotline-card { margin-top: 2rem; background: rgba(230,57,70,.12); border: 1px solid rgba(230,57,70,.2); border-radius: 16px; padding: 1.6rem 1.8rem; display: flex; align-items: center; gap: 1rem; }
+    .hotline-card { margin-top: 2rem; background: rgba(74,222,128,.12); border: 1px solid rgba(74,222,128,.2); border-radius: 16px; padding: 1.6rem 1.8rem; display: flex; align-items: center; gap: 1rem; }
     .hotline-card .hico { font-size: 1.6rem; }
     .hotline-card strong { display: block; color: #fff; font-size: 1rem; margin-bottom: .15rem; }
     .hotline-card span { color: rgba(255,255,255,.45); font-size: .88rem; }
@@ -632,11 +687,11 @@
         <div class="vorteile-big-num">10</div>
       </div>
       <div class="vorteile-items">
-        <div class="v-item"><div class="v-icon">🏆</div><div><h4>Zertifizierter Fachbetrieb</h4><p>Alle Folierungen werden von ausgebildeten Fachkräften mit Erfahrung aus über 2.500 Projekten durchgeführt.</p></div></div>
-        <div class="v-item"><div class="v-icon">🎨</div><div><h4>Premium-Folienmaterialien</h4><p>Wir verwenden ausschließlich Markenfolien von 3M, ORACAL und Avery Dennison – für maximale Langlebigkeit.</p></div></div>
-        <div class="v-item"><div class="v-icon">⚡</div><div><h4>Express-Service verfügbar</h4><p>Viele Folierungen in 1–3 Tagen fertig. Leihauto auf Anfrage. Damit du nicht lange auf dein Auto verzichten musst.</p></div></div>
-        <div class="v-item"><div class="v-icon">🔄</div><div><h4>Reversibel & lackschonend</h4><p>Folien lassen sich rückstandslos entfernen – der Originallack bleibt perfekt erhalten.</p></div></div>
-        <div class="v-item"><div class="v-icon">🔒</div><div><h4>Garantie auf alle Arbeiten</h4><p>2 Jahre Garantie auf alle Folierungen. Blasen, Ablösungen oder Fehler beheben wir kostenlos.</p></div></div>
+        <div class="v-item glow-card"><div class="v-icon">🏆</div><div><h4>Zertifizierter Fachbetrieb</h4><p>Alle Folierungen werden von ausgebildeten Fachkräften mit Erfahrung aus über 2.500 Projekten durchgeführt.</p></div></div>
+        <div class="v-item glow-card"><div class="v-icon">🎨</div><div><h4>Premium-Folienmaterialien</h4><p>Wir verwenden ausschließlich Markenfolien von 3M, ORACAL und Avery Dennison – für maximale Langlebigkeit.</p></div></div>
+        <div class="v-item glow-card"><div class="v-icon">⚡</div><div><h4>Express-Service verfügbar</h4><p>Viele Folierungen in 1–3 Tagen fertig. Leihauto auf Anfrage. Damit du nicht lange auf dein Auto verzichten musst.</p></div></div>
+        <div class="v-item glow-card"><div class="v-icon">🔄</div><div><h4>Reversibel & lackschonend</h4><p>Folien lassen sich rückstandslos entfernen – der Originallack bleibt perfekt erhalten.</p></div></div>
+        <div class="v-item glow-card"><div class="v-icon">🔒</div><div><h4>Garantie auf alle Arbeiten</h4><p>2 Jahre Garantie auf alle Folierungen. Blasen, Ablösungen oder Fehler beheben wir kostenlos.</p></div></div>
       </div>
     </div>
   </div>
@@ -660,39 +715,39 @@
       <!-- Spalte 1 – 15s -->
       <div class="testi-col">
         <div class="testi-col-inner" style="--dur:15s">
-          <div class="t-card"><p class="t-card-text">Mein BMW wurde matt schwarz foliert – absolut perfekte Arbeit! Keine Blasen, keine Falten. Sieht aus wie ab Werk, nur viel geiler.</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/men/11.jpg" alt="Thomas K."><div><strong>Thomas K.</strong><span>BMW M3 · Vollfolierung matt schwarz</span></div></div></div>
-          <div class="t-card"><p class="t-card-text">PPF-Schutzfolie auf die komplette Front – super Qualität und professionelle Beratung. Mein Lack ist jetzt perfekt geschützt.</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/men/22.jpg" alt="Jonas B."><div><strong>Jonas B.</strong><span>Audi RS6 · PPF Frontschutz</span></div></div></div>
-          <div class="t-card"><p class="t-card-text">Vollfolierung in Satin Grau – mein Porsche ist jetzt ein echter Hingucker. Die Qualität ist einfach unschlagbar.</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/men/33.jpg" alt="Felix K."><div><strong>Felix K.</strong><span>Porsche 911 · Vollfolierung satin</span></div></div></div>
+          <div class="t-card glow-card"><p class="t-card-text">Mein BMW wurde matt schwarz foliert – absolut perfekte Arbeit! Keine Blasen, keine Falten. Sieht aus wie ab Werk, nur viel geiler.</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/men/11.jpg" alt="Thomas K."><div><strong>Thomas K.</strong><span>BMW M3 · Vollfolierung matt schwarz</span></div></div></div>
+          <div class="t-card glow-card"><p class="t-card-text">PPF-Schutzfolie auf die komplette Front – super Qualität und professionelle Beratung. Mein Lack ist jetzt perfekt geschützt.</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/men/22.jpg" alt="Jonas B."><div><strong>Jonas B.</strong><span>Audi RS6 · PPF Frontschutz</span></div></div></div>
+          <div class="t-card glow-card"><p class="t-card-text">Vollfolierung in Satin Grau – mein Porsche ist jetzt ein echter Hingucker. Die Qualität ist einfach unschlagbar.</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/men/33.jpg" alt="Felix K."><div><strong>Felix K.</strong><span>Porsche 911 · Vollfolierung satin</span></div></div></div>
           <!-- duplicate for infinite loop -->
-          <div class="t-card"><p class="t-card-text">Mein BMW wurde matt schwarz foliert – absolut perfekte Arbeit! Keine Blasen, keine Falten. Sieht aus wie ab Werk, nur viel geiler.</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/men/11.jpg" alt="Thomas K."><div><strong>Thomas K.</strong><span>BMW M3 · Vollfolierung matt schwarz</span></div></div></div>
-          <div class="t-card"><p class="t-card-text">PPF-Schutzfolie auf die komplette Front – super Qualität und professionelle Beratung. Mein Lack ist jetzt perfekt geschützt.</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/men/22.jpg" alt="Jonas B."><div><strong>Jonas B.</strong><span>Audi RS6 · PPF Frontschutz</span></div></div></div>
-          <div class="t-card"><p class="t-card-text">Vollfolierung in Satin Grau – mein Porsche ist jetzt ein echter Hingucker. Die Qualität ist einfach unschlagbar.</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/men/33.jpg" alt="Felix K."><div><strong>Felix K.</strong><span>Porsche 911 · Vollfolierung satin</span></div></div></div>
+          <div class="t-card glow-card"><p class="t-card-text">Mein BMW wurde matt schwarz foliert – absolut perfekte Arbeit! Keine Blasen, keine Falten. Sieht aus wie ab Werk, nur viel geiler.</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/men/11.jpg" alt="Thomas K."><div><strong>Thomas K.</strong><span>BMW M3 · Vollfolierung matt schwarz</span></div></div></div>
+          <div class="t-card glow-card"><p class="t-card-text">PPF-Schutzfolie auf die komplette Front – super Qualität und professionelle Beratung. Mein Lack ist jetzt perfekt geschützt.</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/men/22.jpg" alt="Jonas B."><div><strong>Jonas B.</strong><span>Audi RS6 · PPF Frontschutz</span></div></div></div>
+          <div class="t-card glow-card"><p class="t-card-text">Vollfolierung in Satin Grau – mein Porsche ist jetzt ein echter Hingucker. Die Qualität ist einfach unschlagbar.</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/men/33.jpg" alt="Felix K."><div><strong>Felix K.</strong><span>Porsche 911 · Vollfolierung satin</span></div></div></div>
         </div>
       </div>
 
       <!-- Spalte 2 – 19s -->
       <div class="testi-col">
         <div class="testi-col-inner" style="--dur:19s">
-          <div class="t-card"><p class="t-card-text">Dachfolierung in Carbon-Optik für meinen Golf. Schnell, sauber und zu einem fairen Preis. Absolut empfehlenswert!</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sandra M."><div><strong>Sandra M.</strong><span>VW Golf · Dachfolierung Carbon</span></div></div></div>
-          <div class="t-card"><p class="t-card-text">Firmenwagen beschriftet – pünktlich fertig, sehr saubere Arbeit und super freundliches Team. Komme definitiv wieder!</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/women/55.jpg" alt="Maria R."><div><strong>Maria R.</strong><span>Transporter · Werbebeschriftung</span></div></div></div>
-          <div class="t-card"><p class="t-card-text">Kostenvoranschlag exakt eingehalten, super freundliche Beratung. Werde jeden empfehlen der sein Auto folieren lassen will!</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/men/66.jpg" alt="Bernd N."><div><strong>Bernd N.</strong><span>BMW X5 · PPF Vollschutz</span></div></div></div>
+          <div class="t-card glow-card"><p class="t-card-text">Dachfolierung in Carbon-Optik für meinen Golf. Schnell, sauber und zu einem fairen Preis. Absolut empfehlenswert!</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sandra M."><div><strong>Sandra M.</strong><span>VW Golf · Dachfolierung Carbon</span></div></div></div>
+          <div class="t-card glow-card"><p class="t-card-text">Firmenwagen beschriftet – pünktlich fertig, sehr saubere Arbeit und super freundliches Team. Komme definitiv wieder!</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/women/55.jpg" alt="Maria R."><div><strong>Maria R.</strong><span>Transporter · Werbebeschriftung</span></div></div></div>
+          <div class="t-card glow-card"><p class="t-card-text">Kostenvoranschlag exakt eingehalten, super freundliche Beratung. Werde jeden empfehlen der sein Auto folieren lassen will!</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/men/66.jpg" alt="Bernd N."><div><strong>Bernd N.</strong><span>BMW X5 · PPF Vollschutz</span></div></div></div>
           <!-- duplicate -->
-          <div class="t-card"><p class="t-card-text">Dachfolierung in Carbon-Optik für meinen Golf. Schnell, sauber und zu einem fairen Preis. Absolut empfehlenswert!</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sandra M."><div><strong>Sandra M.</strong><span>VW Golf · Dachfolierung Carbon</span></div></div></div>
-          <div class="t-card"><p class="t-card-text">Firmenwagen beschriftet – pünktlich fertig, sehr saubere Arbeit und super freundliches Team. Komme definitiv wieder!</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/women/55.jpg" alt="Maria R."><div><strong>Maria R.</strong><span>Transporter · Werbebeschriftung</span></div></div></div>
-          <div class="t-card"><p class="t-card-text">Kostenvoranschlag exakt eingehalten, super freundliche Beratung. Werde jeden empfehlen der sein Auto folieren lassen will!</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/men/66.jpg" alt="Bernd N."><div><strong>Bernd N.</strong><span>BMW X5 · PPF Vollschutz</span></div></div></div>
+          <div class="t-card glow-card"><p class="t-card-text">Dachfolierung in Carbon-Optik für meinen Golf. Schnell, sauber und zu einem fairen Preis. Absolut empfehlenswert!</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sandra M."><div><strong>Sandra M.</strong><span>VW Golf · Dachfolierung Carbon</span></div></div></div>
+          <div class="t-card glow-card"><p class="t-card-text">Firmenwagen beschriftet – pünktlich fertig, sehr saubere Arbeit und super freundliches Team. Komme definitiv wieder!</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/women/55.jpg" alt="Maria R."><div><strong>Maria R.</strong><span>Transporter · Werbebeschriftung</span></div></div></div>
+          <div class="t-card glow-card"><p class="t-card-text">Kostenvoranschlag exakt eingehalten, super freundliche Beratung. Werde jeden empfehlen der sein Auto folieren lassen will!</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/men/66.jpg" alt="Bernd N."><div><strong>Bernd N.</strong><span>BMW X5 · PPF Vollschutz</span></div></div></div>
         </div>
       </div>
 
       <!-- Spalte 3 – 17s -->
       <div class="testi-col">
         <div class="testi-col-inner" style="--dur:17s">
-          <div class="t-card"><p class="t-card-text">Teilfolierung Motorhaube und Spiegel in Gloss Black – schaut hammer aus! Preis war fair, Termin schnell verfügbar.</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/men/77.jpg" alt="Peter H."><div><strong>Peter H.</strong><span>Ford Mustang · Teilfolierung</span></div></div></div>
-          <div class="t-card"><p class="t-card-text">Spontantermin bekommen, Dachfolie noch am selben Tag verlegt. Unglaublich schnell und trotzdem perfektes Ergebnis!</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/men/88.jpg" alt="Daniel L."><div><strong>Daniel L.</strong><span>VW Golf R · Dachfolierung</span></div></div></div>
-          <div class="t-card"><p class="t-card-text">Tolle Atmosphäre, saubere Werkstatt. Das Team nimmt sich Zeit für Beratung und erklärt alles genau. Sehr vertrauenswürdig!</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/women/99.jpg" alt="Katrin F."><div><strong>Katrin F.</strong><span>Mini Cooper · Vollfolierung</span></div></div></div>
+          <div class="t-card glow-card"><p class="t-card-text">Teilfolierung Motorhaube und Spiegel in Gloss Black – schaut hammer aus! Preis war fair, Termin schnell verfügbar.</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/men/77.jpg" alt="Peter H."><div><strong>Peter H.</strong><span>Ford Mustang · Teilfolierung</span></div></div></div>
+          <div class="t-card glow-card"><p class="t-card-text">Spontantermin bekommen, Dachfolie noch am selben Tag verlegt. Unglaublich schnell und trotzdem perfektes Ergebnis!</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/men/88.jpg" alt="Daniel L."><div><strong>Daniel L.</strong><span>VW Golf R · Dachfolierung</span></div></div></div>
+          <div class="t-card glow-card"><p class="t-card-text">Tolle Atmosphäre, saubere Werkstatt. Das Team nimmt sich Zeit für Beratung und erklärt alles genau. Sehr vertrauenswürdig!</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/women/99.jpg" alt="Katrin F."><div><strong>Katrin F.</strong><span>Mini Cooper · Vollfolierung</span></div></div></div>
           <!-- duplicate -->
-          <div class="t-card"><p class="t-card-text">Teilfolierung Motorhaube und Spiegel in Gloss Black – schaut hammer aus! Preis war fair, Termin schnell verfügbar.</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/men/77.jpg" alt="Peter H."><div><strong>Peter H.</strong><span>Ford Mustang · Teilfolierung</span></div></div></div>
-          <div class="t-card"><p class="t-card-text">Spontantermin bekommen, Dachfolie noch am selben Tag verlegt. Unglaublich schnell und trotzdem perfektes Ergebnis!</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/men/88.jpg" alt="Daniel L."><div><strong>Daniel L.</strong><span>VW Golf R · Dachfolierung</span></div></div></div>
-          <div class="t-card"><p class="t-card-text">Tolle Atmosphäre, saubere Werkstatt. Das Team nimmt sich Zeit für Beratung und erklärt alles genau. Sehr vertrauenswürdig!</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/women/99.jpg" alt="Katrin F."><div><strong>Katrin F.</strong><span>Mini Cooper · Vollfolierung</span></div></div></div>
+          <div class="t-card glow-card"><p class="t-card-text">Teilfolierung Motorhaube und Spiegel in Gloss Black – schaut hammer aus! Preis war fair, Termin schnell verfügbar.</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/men/77.jpg" alt="Peter H."><div><strong>Peter H.</strong><span>Ford Mustang · Teilfolierung</span></div></div></div>
+          <div class="t-card glow-card"><p class="t-card-text">Spontantermin bekommen, Dachfolie noch am selben Tag verlegt. Unglaublich schnell und trotzdem perfektes Ergebnis!</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/men/88.jpg" alt="Daniel L."><div><strong>Daniel L.</strong><span>VW Golf R · Dachfolierung</span></div></div></div>
+          <div class="t-card glow-card"><p class="t-card-text">Tolle Atmosphäre, saubere Werkstatt. Das Team nimmt sich Zeit für Beratung und erklärt alles genau. Sehr vertrauenswürdig!</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/women/99.jpg" alt="Katrin F."><div><strong>Katrin F.</strong><span>Mini Cooper · Vollfolierung</span></div></div></div>
         </div>
       </div>
     </div>
@@ -788,21 +843,21 @@
         <h2 class="s-title">Termin <em>online</em> buchen</h2>
         <p>Wähle einen freien Termin für deine Beratung oder Folierung. Wir melden uns innerhalb von 2 Stunden zur Bestätigung.</p>
         <div class="c-items">
-          <div class="c-item"><div class="c-ico">📞</div><div><div class="c-lbl">Telefon</div><div class="c-val">07231 / 45 67 890</div></div></div>
-          <div class="c-item"><div class="c-ico">✉️</div><div><div class="c-lbl">E-Mail</div><div class="c-val">info@kfz-folie-pforzheim.de</div></div></div>
-          <div class="c-item"><div class="c-ico">📍</div><div><div class="c-lbl">Adresse</div><div class="c-val">Musterstraße 1, 75175 Pforzheim</div></div></div>
-          <div class="c-item"><div class="c-ico">⏰</div><div><div class="c-lbl">Beratung</div><div class="c-val">Kostenlos & unverbindlich</div></div></div>
+          <div class="c-item glow-card"><div class="c-ico">📞</div><div><div class="c-lbl">Telefon</div><div class="c-val">07231 / 45 67 890</div></div></div>
+          <div class="c-item glow-card"><div class="c-ico">✉️</div><div><div class="c-lbl">E-Mail</div><div class="c-val">info@kfz-folie-pforzheim.de</div></div></div>
+          <div class="c-item glow-card"><div class="c-ico">📍</div><div><div class="c-lbl">Adresse</div><div class="c-val">Musterstraße 1, 75175 Pforzheim</div></div></div>
+          <div class="c-item glow-card"><div class="c-ico">⏰</div><div><div class="c-lbl">Beratung</div><div class="c-val">Kostenlos & unverbindlich</div></div></div>
         </div>
       </div>
-      <div class="booking-widget-box">
+      <div class="booking-widget-box glow-card">
         <div class="bwb-glow"></div>
         <div class="bwb-icon">🎨</div>
         <h3>Jetzt Termin buchen</h3>
         <p>Kostenlose Beratung, Farbmuster und ein persönliches Angebot – alles in einem Termin.</p>
         <div class="bw-steps">
-          <div class="bw-step"><span>1</span>Fahrzeug & Wunschfolie auswählen</div>
-          <div class="bw-step"><span>2</span>Termin & Kontakt angeben</div>
-          <div class="bw-step"><span>3</span>Bestätigung per E-Mail / Telefon</div>
+          <div class="bw-step glow-card"><span>1</span>Fahrzeug & Wunschfolie auswählen</div>
+          <div class="bw-step glow-card"><span>2</span>Termin & Kontakt angeben</div>
+          <div class="bw-step glow-card"><span>3</span>Bestätigung per E-Mail / Telefon</div>
         </div>
         <a href="tel:072314567890" class="bw-btn">Jetzt anrufen & Termin buchen</a>
         <p class="bw-hint">Oder schreib uns: <strong>info@kfz-folie-pforzheim.de</strong></p>
@@ -957,7 +1012,7 @@
   });
 
   // ── GLOW CARDS ──
-  document.querySelectorAll('.sv-card').forEach(card => {
+  document.querySelectorAll('.sv-card, .glow-card').forEach(card => {
     card.addEventListener('pointermove', (e) => {
       const rect = card.getBoundingClientRect();
       const lx = e.clientX - rect.left;
