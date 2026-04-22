@@ -228,12 +228,6 @@
 
     /* ══ ABOUT ══ */
     #ueber-uns { background: #080808; position: relative; }
-    #ueber-uns-canvas {
-      position: absolute; inset: 0;
-      width: 100%; height: 100%;
-      pointer-events: none; z-index: 0;
-    }
-    #ueber-uns .container { position: relative; z-index: 1; }
     #ueber-uns .s-title { color: #fff; }
     #ueber-uns .about-text p { color: rgba(255,255,255,.5); }
     #ueber-uns .about-check { color: rgba(255,255,255,.85); }
@@ -301,30 +295,42 @@
     .bw-btn:hover { background: var(--red); transform: translateY(-2px); box-shadow: 0 12px 32px var(--red-glow); }
     .bw-btn:hover::after { transform: translateX(100%); }
 
-    /* ══ REVIEWS ══ */
-    #bewertungen { background: #0a0a0a; overflow: hidden; padding-left: 0; padding-right: 0; }
-    .rev-head { padding: 0 5rem; margin-bottom: 4rem; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 2rem; }
+    /* ══ REVIEWS – vertical columns ══ */
+    #bewertungen { background: #0a0a0a; padding: 8rem 5rem; }
+    .rev-head { margin-bottom: 3rem; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 2rem; }
     .rev-score { display: flex; align-items: center; gap: 1.5rem; }
-    .rev-big { font-size: 5.5rem; font-weight: 900; line-height: 1; letter-spacing: -3px; }
+    .rev-big { font-size: 5.5rem; font-weight: 900; line-height: 1; letter-spacing: -3px; color: #fff; }
     .rev-stars { color: #f59e0b; font-size: 1.2rem; letter-spacing: 3px; }
     .rev-count { font-size: .82rem; color: rgba(255,255,255,.4); margin-top: .2rem; }
-    .reviews-carousel { display: flex; flex-direction: column; gap: 1.2rem; }
-    .rev-track-wrap { overflow: hidden; -webkit-mask: linear-gradient(90deg, transparent, #0a0a0a 6%, #0a0a0a 94%, transparent); mask: linear-gradient(90deg, transparent, #0a0a0a 6%, #0a0a0a 94%, transparent); }
-    .rev-track { display: flex; gap: 1.4rem; width: max-content; animation: revLeft 38s linear infinite; }
-    .rev-track.rev-r { animation: revRight 44s linear infinite; }
-    .rev-track:hover, .rev-track.rev-r:hover { animation-play-state: paused; }
-    @keyframes revLeft  { from{transform:translateX(0)}    to{transform:translateX(-50%)} }
-    @keyframes revRight { from{transform:translateX(-50%)} to{transform:translateX(0)} }
-    .r-card { background: #141414; border: 1px solid #222; border-radius: 20px; padding: 2rem; width: 320px; flex-shrink: 0; transition: transform .3s, border-color .3s, box-shadow .3s; cursor: default; }
-    .r-card:hover { transform: translateY(-6px) scale(1.02); border-color: rgba(230,57,70,.3); box-shadow: 0 24px 60px rgba(0,0,0,.5); }
-    .r-stars { color: #f59e0b; font-size: .95rem; letter-spacing: 2px; margin-bottom: .9rem; }
-    .r-text { color: rgba(255,255,255,.45); line-height: 1.75; font-size: .88rem; margin-bottom: 1.4rem; font-style: italic; position: relative; padding-left: 1.2rem; }
-    .r-text::before { content:'"'; position:absolute; left:0; top:-.2rem; color:var(--red); font-size:2rem; font-style:normal; line-height:1; }
-    .r-person { display: flex; align-items: center; gap: .75rem; }
-    .r-av { width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, var(--red), #ff6b35); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: .8rem; color: #fff; flex-shrink: 0; }
-    .r-person strong { display: block; font-size: .88rem; }
-    .r-person strong { color: #fff; }
-    .r-person span { font-size: .75rem; color: rgba(255,255,255,.35); }
+
+    .testi-cols-wrap {
+      display: flex; gap: 1.5rem; justify-content: center;
+      max-height: 740px; overflow: hidden;
+      -webkit-mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+      mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+    }
+    .testi-col { display: flex; flex-direction: column; gap: 1.5rem; flex-shrink: 0; width: 320px; }
+    .testi-col-inner {
+      display: flex; flex-direction: column; gap: 1.5rem;
+      animation: scrollUp var(--dur, 15s) linear infinite;
+    }
+    @keyframes scrollUp { from { transform: translateY(0) } to { transform: translateY(-50%) } }
+
+    .t-card {
+      background: #141414; border: 1px solid #222; border-radius: 24px;
+      padding: 1.8rem; flex-shrink: 0;
+      box-shadow: 0 4px 20px rgba(230,57,70,.05);
+      transition: border-color .3s;
+    }
+    .t-card:hover { border-color: rgba(230,57,70,.25); }
+    .t-card-text { color: rgba(255,255,255,.6); font-size: .9rem; line-height: 1.75; }
+    .t-card-person { display: flex; align-items: center; gap: .75rem; margin-top: 1.2rem; }
+    .t-card-person img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+    .t-card-person strong { display: block; font-size: .88rem; font-weight: 700; color: #fff; }
+    .t-card-person span { font-size: .78rem; color: rgba(255,255,255,.4); }
+
+    @media (max-width: 1024px) { .testi-col:nth-child(3) { display: none; } }
+    @media (max-width: 640px)  { .testi-col:nth-child(2) { display: none; } #bewertungen { padding: 4rem 1.5rem; } }
 
     /* ══ HOURS + MAP ══ */
     #standort { background: var(--text); padding: 8rem 5rem; }
@@ -600,7 +606,6 @@
 
 <!-- ÜBER UNS -->
 <section id="ueber-uns">
-  <div id="ueber-uns-canvas"></div>
   <div class="container">
     <div class="about-grid">
       <div class="about-imgs">
@@ -678,49 +683,56 @@
 
 <!-- BEWERTUNGEN -->
 <section id="bewertungen">
-  <div class="rev-head">
-    <div>
-      <div class="s-eyebrow"><div class="s-eyebrow-line"></div><span class="s-label">Kundenstimmen</span></div>
-      <h2 class="s-title">Was unsere <em>Kunden</em> sagen</h2>
-    </div>
-    <div class="rev-score">
-      <div class="rev-big">5.0</div>
-      <div><div class="rev-stars">★★★★★</div><div class="rev-count">187 Google-Bewertungen</div></div>
-    </div>
-  </div>
-  <div class="reviews-carousel">
-    <div class="rev-track-wrap">
-      <div class="rev-track">
-        <div class="r-card"><div class="r-stars">★★★★★</div><p class="r-text">Mein BMW wurde matt schwarz foliert – absolut perfekte Arbeit! Keine Blasen, keine Falten. Sieht aus wie ab Werk, nur viel geiler.</p><div class="r-person"><div class="r-av">TK</div><div><strong>Thomas K.</strong><span>BMW M3 · Vollfolierung matt schwarz</span></div></div></div>
-        <div class="r-card"><div class="r-stars">★★★★★</div><p class="r-text">Dachfolierung in Carbon-Optik für meinen Golf. Schnell, sauber und zu einem fairen Preis. Absolut empfehlenswert!</p><div class="r-person"><div class="r-av">SM</div><div><strong>Sandra M.</strong><span>VW Golf · Dachfolierung Carbon</span></div></div></div>
-        <div class="r-card"><div class="r-stars">★★★★★</div><p class="r-text">PPF-Schutzfolie auf die komplette Front – super Qualität und professionelle Beratung. Mein Lack ist jetzt perfekt geschützt.</p><div class="r-person"><div class="r-av">JB</div><div><strong>Jonas B.</strong><span>Audi RS6 · PPF Frontschutz</span></div></div></div>
-        <div class="r-card"><div class="r-stars">★★★★★</div><p class="r-text">Firmenwagen beschriftet – pünktlich fertig, sehr saubere Arbeit und super freundliches Team. Komme definitiv wieder!</p><div class="r-person"><div class="r-av">MR</div><div><strong>Maria R.</strong><span>Transporter · Werbebeschriftung</span></div></div></div>
-        <div class="r-card"><div class="r-stars">★★★★★</div><p class="r-text">Vollfolierung in Satin Grau – mein Porsche ist jetzt ein echter Hingucker. Die Qualität ist einfach unschlagbar.</p><div class="r-person"><div class="r-av">FK</div><div><strong>Felix K.</strong><span>Porsche 911 · Vollfolierung satin</span></div></div></div>
-        <div class="r-card"><div class="r-stars">★★★★★</div><p class="r-text">Alte Folierung komplett und rückstandslos entfernt, neuer Lack perfekt erhalten. Sehr kompetentes Team!</p><div class="r-person"><div class="r-av">AW</div><div><strong>Anna W.</strong><span>Mercedes · Folienentfernung</span></div></div></div>
-        <!-- duplicate -->
-        <div class="r-card"><div class="r-stars">★★★★★</div><p class="r-text">Mein BMW wurde matt schwarz foliert – absolut perfekte Arbeit! Keine Blasen, keine Falten. Sieht aus wie ab Werk, nur viel geiler.</p><div class="r-person"><div class="r-av">TK</div><div><strong>Thomas K.</strong><span>BMW M3 · Vollfolierung matt schwarz</span></div></div></div>
-        <div class="r-card"><div class="r-stars">★★★★★</div><p class="r-text">Dachfolierung in Carbon-Optik für meinen Golf. Schnell, sauber und zu einem fairen Preis. Absolut empfehlenswert!</p><div class="r-person"><div class="r-av">SM</div><div><strong>Sandra M.</strong><span>VW Golf · Dachfolierung Carbon</span></div></div></div>
-        <div class="r-card"><div class="r-stars">★★★★★</div><p class="r-text">PPF-Schutzfolie auf die komplette Front – super Qualität und professionelle Beratung. Mein Lack ist jetzt perfekt geschützt.</p><div class="r-person"><div class="r-av">JB</div><div><strong>Jonas B.</strong><span>Audi RS6 · PPF Frontschutz</span></div></div></div>
-        <div class="r-card"><div class="r-stars">★★★★★</div><p class="r-text">Firmenwagen beschriftet – pünktlich fertig, sehr saubere Arbeit und super freundliches Team. Komme definitiv wieder!</p><div class="r-person"><div class="r-av">MR</div><div><strong>Maria R.</strong><span>Transporter · Werbebeschriftung</span></div></div></div>
-        <div class="r-card"><div class="r-stars">★★★★★</div><p class="r-text">Vollfolierung in Satin Grau – mein Porsche ist jetzt ein echter Hingucker. Die Qualität ist einfach unschlagbar.</p><div class="r-person"><div class="r-av">FK</div><div><strong>Felix K.</strong><span>Porsche 911 · Vollfolierung satin</span></div></div></div>
-        <div class="r-card"><div class="r-stars">★★★★★</div><p class="r-text">Alte Folierung komplett und rückstandslos entfernt, neuer Lack perfekt erhalten. Sehr kompetentes Team!</p><div class="r-person"><div class="r-av">AW</div><div><strong>Anna W.</strong><span>Mercedes · Folienentfernung</span></div></div></div>
+  <div class="container">
+    <div class="rev-head">
+      <div>
+        <div class="s-eyebrow"><div class="s-eyebrow-line"></div><span class="s-label">Kundenstimmen</span></div>
+        <h2 class="s-title">Was unsere <em>Kunden</em> sagen</h2>
+      </div>
+      <div class="rev-score">
+        <div class="rev-big">5.0</div>
+        <div><div class="rev-stars">★★★★★</div><div class="rev-count">187 Google-Bewertungen</div></div>
       </div>
     </div>
-    <div class="rev-track-wrap">
-      <div class="rev-track rev-r">
-        <div class="r-card"><div class="r-stars">★★★★★</div><p class="r-text">Teilfolierung Motorhaube und Spiegel in Gloss Black – schaut hammer aus! Preis war fair, Termin schnell verfügbar.</p><div class="r-person"><div class="r-av">PH</div><div><strong>Peter H.</strong><span>Ford Mustang · Teilfolierung</span></div></div></div>
-        <div class="r-card"><div class="r-stars">★★★★★</div><p class="r-text">Hatte noch nie so eine saubere Folienverlegung gesehen. Kein einziger Lufteinschluss. Einfach perfekt!</p><div class="r-person"><div class="r-av">LM</div><div><strong>Laura M.</strong><span>Audi TT · Vollfolierung weiß</span></div></div></div>
-        <div class="r-card"><div class="r-stars">★★★★★</div><p class="r-text">Kostenvoranschlag exakt eingehalten, super freundliche Beratung. Werde jeden empfehlen der sein Auto folieren lassen will!</p><div class="r-person"><div class="r-av">BN</div><div><strong>Bernd N.</strong><span>BMW X5 · PPF Vollschutz</span></div></div></div>
-        <div class="r-card"><div class="r-stars">★★★★★</div><p class="r-text">Firmenflotte mit 4 Fahrzeugen beschriftet – alle pünktlich, alle perfekt. Absoluter Profi-Betrieb!</p><div class="r-person"><div class="r-av">CS</div><div><strong>Christine S.</strong><span>Firmenflotte · Werbebeschriftung</span></div></div></div>
-        <div class="r-card"><div class="r-stars">★★★★★</div><p class="r-text">Spontantermin bekommen, Dachfolie noch am selben Tag verlegt. Unglaublich schnell und trotzdem perfektes Ergebnis!</p><div class="r-person"><div class="r-av">DL</div><div><strong>Daniel L.</strong><span>VW Golf R · Dachfolierung</span></div></div></div>
-        <div class="r-card"><div class="r-stars">★★★★★</div><p class="r-text">Tolle Atmosphäre, saubere Werkstatt. Das Team nimmt sich Zeit für Beratung und erklärt alles genau. Sehr vertrauenswürdig!</p><div class="r-person"><div class="r-av">KF</div><div><strong>Katrin F.</strong><span>Mini Cooper · Vollfolierung</span></div></div></div>
-        <!-- duplicate -->
-        <div class="r-card"><div class="r-stars">★★★★★</div><p class="r-text">Teilfolierung Motorhaube und Spiegel in Gloss Black – schaut hammer aus! Preis war fair, Termin schnell verfügbar.</p><div class="r-person"><div class="r-av">PH</div><div><strong>Peter H.</strong><span>Ford Mustang · Teilfolierung</span></div></div></div>
-        <div class="r-card"><div class="r-stars">★★★★★</div><p class="r-text">Hatte noch nie so eine saubere Folienverlegung gesehen. Kein einziger Lufteinschluss. Einfach perfekt!</p><div class="r-person"><div class="r-av">LM</div><div><strong>Laura M.</strong><span>Audi TT · Vollfolierung weiß</span></div></div></div>
-        <div class="r-card"><div class="r-stars">★★★★★</div><p class="r-text">Kostenvoranschlag exakt eingehalten, super freundliche Beratung. Werde jeden empfehlen der sein Auto folieren lassen will!</p><div class="r-person"><div class="r-av">BN</div><div><strong>Bernd N.</strong><span>BMW X5 · PPF Vollschutz</span></div></div></div>
-        <div class="r-card"><div class="r-stars">★★★★★</div><p class="r-text">Firmenflotte mit 4 Fahrzeugen beschriftet – alle pünktlich, alle perfekt. Absoluter Profi-Betrieb!</p><div class="r-person"><div class="r-av">CS</div><div><strong>Christine S.</strong><span>Firmenflotte · Werbebeschriftung</span></div></div></div>
-        <div class="r-card"><div class="r-stars">★★★★★</div><p class="r-text">Spontantermin bekommen, Dachfolie noch am selben Tag verlegt. Unglaublich schnell und trotzdem perfektes Ergebnis!</p><div class="r-person"><div class="r-av">DL</div><div><strong>Daniel L.</strong><span>VW Golf R · Dachfolierung</span></div></div></div>
-        <div class="r-card"><div class="r-stars">★★★★★</div><p class="r-text">Tolle Atmosphäre, saubere Werkstatt. Das Team nimmt sich Zeit für Beratung und erklärt alles genau. Sehr vertrauenswürdig!</p><div class="r-person"><div class="r-av">KF</div><div><strong>Katrin F.</strong><span>Mini Cooper · Vollfolierung</span></div></div></div>
+
+    <div class="testi-cols-wrap">
+      <!-- Spalte 1 – 15s -->
+      <div class="testi-col">
+        <div class="testi-col-inner" style="--dur:15s">
+          <div class="t-card"><p class="t-card-text">Mein BMW wurde matt schwarz foliert – absolut perfekte Arbeit! Keine Blasen, keine Falten. Sieht aus wie ab Werk, nur viel geiler.</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/men/11.jpg" alt="Thomas K."><div><strong>Thomas K.</strong><span>BMW M3 · Vollfolierung matt schwarz</span></div></div></div>
+          <div class="t-card"><p class="t-card-text">PPF-Schutzfolie auf die komplette Front – super Qualität und professionelle Beratung. Mein Lack ist jetzt perfekt geschützt.</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/men/22.jpg" alt="Jonas B."><div><strong>Jonas B.</strong><span>Audi RS6 · PPF Frontschutz</span></div></div></div>
+          <div class="t-card"><p class="t-card-text">Vollfolierung in Satin Grau – mein Porsche ist jetzt ein echter Hingucker. Die Qualität ist einfach unschlagbar.</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/men/33.jpg" alt="Felix K."><div><strong>Felix K.</strong><span>Porsche 911 · Vollfolierung satin</span></div></div></div>
+          <!-- duplicate for infinite loop -->
+          <div class="t-card"><p class="t-card-text">Mein BMW wurde matt schwarz foliert – absolut perfekte Arbeit! Keine Blasen, keine Falten. Sieht aus wie ab Werk, nur viel geiler.</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/men/11.jpg" alt="Thomas K."><div><strong>Thomas K.</strong><span>BMW M3 · Vollfolierung matt schwarz</span></div></div></div>
+          <div class="t-card"><p class="t-card-text">PPF-Schutzfolie auf die komplette Front – super Qualität und professionelle Beratung. Mein Lack ist jetzt perfekt geschützt.</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/men/22.jpg" alt="Jonas B."><div><strong>Jonas B.</strong><span>Audi RS6 · PPF Frontschutz</span></div></div></div>
+          <div class="t-card"><p class="t-card-text">Vollfolierung in Satin Grau – mein Porsche ist jetzt ein echter Hingucker. Die Qualität ist einfach unschlagbar.</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/men/33.jpg" alt="Felix K."><div><strong>Felix K.</strong><span>Porsche 911 · Vollfolierung satin</span></div></div></div>
+        </div>
+      </div>
+
+      <!-- Spalte 2 – 19s -->
+      <div class="testi-col">
+        <div class="testi-col-inner" style="--dur:19s">
+          <div class="t-card"><p class="t-card-text">Dachfolierung in Carbon-Optik für meinen Golf. Schnell, sauber und zu einem fairen Preis. Absolut empfehlenswert!</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sandra M."><div><strong>Sandra M.</strong><span>VW Golf · Dachfolierung Carbon</span></div></div></div>
+          <div class="t-card"><p class="t-card-text">Firmenwagen beschriftet – pünktlich fertig, sehr saubere Arbeit und super freundliches Team. Komme definitiv wieder!</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/women/55.jpg" alt="Maria R."><div><strong>Maria R.</strong><span>Transporter · Werbebeschriftung</span></div></div></div>
+          <div class="t-card"><p class="t-card-text">Kostenvoranschlag exakt eingehalten, super freundliche Beratung. Werde jeden empfehlen der sein Auto folieren lassen will!</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/men/66.jpg" alt="Bernd N."><div><strong>Bernd N.</strong><span>BMW X5 · PPF Vollschutz</span></div></div></div>
+          <!-- duplicate -->
+          <div class="t-card"><p class="t-card-text">Dachfolierung in Carbon-Optik für meinen Golf. Schnell, sauber und zu einem fairen Preis. Absolut empfehlenswert!</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sandra M."><div><strong>Sandra M.</strong><span>VW Golf · Dachfolierung Carbon</span></div></div></div>
+          <div class="t-card"><p class="t-card-text">Firmenwagen beschriftet – pünktlich fertig, sehr saubere Arbeit und super freundliches Team. Komme definitiv wieder!</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/women/55.jpg" alt="Maria R."><div><strong>Maria R.</strong><span>Transporter · Werbebeschriftung</span></div></div></div>
+          <div class="t-card"><p class="t-card-text">Kostenvoranschlag exakt eingehalten, super freundliche Beratung. Werde jeden empfehlen der sein Auto folieren lassen will!</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/men/66.jpg" alt="Bernd N."><div><strong>Bernd N.</strong><span>BMW X5 · PPF Vollschutz</span></div></div></div>
+        </div>
+      </div>
+
+      <!-- Spalte 3 – 17s -->
+      <div class="testi-col">
+        <div class="testi-col-inner" style="--dur:17s">
+          <div class="t-card"><p class="t-card-text">Teilfolierung Motorhaube und Spiegel in Gloss Black – schaut hammer aus! Preis war fair, Termin schnell verfügbar.</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/men/77.jpg" alt="Peter H."><div><strong>Peter H.</strong><span>Ford Mustang · Teilfolierung</span></div></div></div>
+          <div class="t-card"><p class="t-card-text">Spontantermin bekommen, Dachfolie noch am selben Tag verlegt. Unglaublich schnell und trotzdem perfektes Ergebnis!</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/men/88.jpg" alt="Daniel L."><div><strong>Daniel L.</strong><span>VW Golf R · Dachfolierung</span></div></div></div>
+          <div class="t-card"><p class="t-card-text">Tolle Atmosphäre, saubere Werkstatt. Das Team nimmt sich Zeit für Beratung und erklärt alles genau. Sehr vertrauenswürdig!</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/women/99.jpg" alt="Katrin F."><div><strong>Katrin F.</strong><span>Mini Cooper · Vollfolierung</span></div></div></div>
+          <!-- duplicate -->
+          <div class="t-card"><p class="t-card-text">Teilfolierung Motorhaube und Spiegel in Gloss Black – schaut hammer aus! Preis war fair, Termin schnell verfügbar.</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/men/77.jpg" alt="Peter H."><div><strong>Peter H.</strong><span>Ford Mustang · Teilfolierung</span></div></div></div>
+          <div class="t-card"><p class="t-card-text">Spontantermin bekommen, Dachfolie noch am selben Tag verlegt. Unglaublich schnell und trotzdem perfektes Ergebnis!</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/men/88.jpg" alt="Daniel L."><div><strong>Daniel L.</strong><span>VW Golf R · Dachfolierung</span></div></div></div>
+          <div class="t-card"><p class="t-card-text">Tolle Atmosphäre, saubere Werkstatt. Das Team nimmt sich Zeit für Beratung und erklärt alles genau. Sehr vertrauenswürdig!</p><div class="t-card-person"><img src="https://randomuser.me/api/portraits/women/99.jpg" alt="Katrin F."><div><strong>Katrin F.</strong><span>Mini Cooper · Vollfolierung</span></div></div></div>
+        </div>
       </div>
     </div>
   </div>
@@ -870,90 +882,6 @@
     card.addEventListener('mouseenter', () => gsap.to(card.querySelector('.sv-num'), { opacity:1, duration:.3 }));
     card.addEventListener('mouseleave', () => gsap.to(card.querySelector('.sv-num'), { opacity:.6, duration:.3 }));
   });
-
-  // ── ÜBER UNS – Ethereal Shadow (1:1 port of etheral-shadow.tsx) ──
-  (function () {
-    const el = document.getElementById('ueber-uns-canvas');
-    el.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden;';
-
-    // Demo props: animation={scale:100,speed:90}, noise={opacity:1,scale:1.2}, color='rgba(128,128,128,1)'
-    function mapRange(v, a, b, c, d) {
-      return c + ((v - a) / (b - a)) * (d - c);
-    }
-    const scale = 100, speed = 90;
-    const displacementScale = mapRange(scale, 1, 100, 20, 100);          // → 100
-    const animationDuration = mapRange(speed, 1, 100, 1000, 50) / 25;   // → ~5.8 s per 360°
-    const freqX = mapRange(scale, 0, 100, 0.001, 0.0005).toFixed(6);    // → 0.0005
-    const freqY = mapRange(scale, 0, 100, 0.004, 0.002).toFixed(6);     // → 0.002
-    const noiseOpacity = 1 / 2;      // noise.opacity / 2
-    const noiseSize    = 1.2 * 200;  // noise.scale * 200 → 240 px
-
-    const id = 'eth' + Math.random().toString(36).slice(2, 8);
-
-    // wrapper displaced by SVG filter + blur
-    const wrap = document.createElement('div');
-    wrap.style.cssText = `position:absolute;inset:-${displacementScale}px;filter:url(#${id}) blur(4px);`;
-
-    // SVG filter (zero-size host)
-    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svg.style.cssText = 'position:absolute;width:0;height:0';
-    svg.innerHTML = `
-      <defs>
-        <filter id="${id}">
-          <feTurbulence result="undulation" numOctaves="2"
-            baseFrequency="${freqX},${freqY}" seed="0" type="turbulence"/>
-          <feColorMatrix id="${id}hue" in="undulation" type="hueRotate" values="180"/>
-          <feColorMatrix in="dist" result="circulation" type="matrix"
-            values="4 0 0 0 1  4 0 0 0 1  4 0 0 0 1  1 0 0 0 0"/>
-          <feDisplacementMap in="SourceGraphic" in2="circulation"
-            scale="${displacementScale}" result="dist"/>
-          <feDisplacementMap in="dist" in2="undulation"
-            scale="${displacementScale}" result="output"/>
-        </filter>
-      </defs>`;
-    wrap.appendChild(svg);
-
-    // blob div – backgroundColor + maskImage (exact from component)
-    const blob = document.createElement('div');
-    blob.style.cssText = `
-      width:100%; height:100%;
-      background-color: rgba(128,128,128,1);
-      -webkit-mask-image: url('https://framerusercontent.com/images/ceBGguIpUU8luwByxuQz79t7To.png');
-      mask-image:         url('https://framerusercontent.com/images/ceBGguIpUU8luwByxuQz79t7To.png');
-      -webkit-mask-size: cover; mask-size: cover;
-      -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
-      -webkit-mask-position: center; mask-position: center;`;
-    wrap.appendChild(blob);
-    el.appendChild(wrap);
-
-    // noise overlay (exact from component)
-    const noise = document.createElement('div');
-    noise.style.cssText = `
-      position:absolute; inset:0;
-      background-image: url('https://framerusercontent.com/images/g0QcWrxr87K0ufOxIUFBakwYA8.png');
-      background-size: ${noiseSize}px;
-      background-repeat: repeat;
-      opacity: ${noiseOpacity};`;
-    el.appendChild(noise);
-
-    // animate hueRotate: 0→360 in animationDuration seconds, looping
-    const hueEl = svg.querySelector(`[id="${id}hue"]`);
-    let hue = 0;
-    let last = null;
-    let active = false;
-    new IntersectionObserver(e => { active = e[0].isIntersecting; }, { threshold: 0.05 })
-      .observe(document.getElementById('ueber-uns'));
-
-    function loop(ts) {
-      requestAnimationFrame(loop);
-      if (!active) { last = null; return; }
-      const dt = last ? (ts - last) / 1000 : 0;
-      last = ts;
-      hue = (hue + (360 / animationDuration) * dt) % 360;
-      if (hueEl) hueEl.setAttribute('values', hue.toFixed(2));
-    }
-    requestAnimationFrame(loop);
-  })();
 
   // ── GLOW CARDS ──
   document.querySelectorAll('.sv-card').forEach(card => {
