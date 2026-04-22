@@ -110,10 +110,10 @@
     @keyframes wheelDown { 0%{transform:translateY(0);opacity:1} 80%{transform:translateY(10px);opacity:0} 100%{transform:translateY(0);opacity:0} }
 
     /* ══ TICKER ══ */
-    .ticker { background: var(--text); padding: 1rem 0; overflow: hidden; }
+    .ticker { background: #0a0a0a; border-top: 1px solid rgba(255,255,255,.06); border-bottom: 1px solid rgba(255,255,255,.06); padding: 1rem 0; overflow: hidden; }
     .ticker-track { display: flex; gap: 3.5rem; white-space: nowrap; animation: ticker 22s linear infinite; }
-    .ticker-track span { color: rgba(255,255,255,.5); font-size: .72rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
-    .ticker-track .dot { color: var(--red); font-size: .5rem; vertical-align: middle; }
+    .ticker-track span { color: var(--red); font-size: .72rem; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; }
+    .ticker-track .dot { color: rgba(74,222,128,.35); font-size: .5rem; vertical-align: middle; }
     @keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 
     /* ══ SECTIONS ══ */
