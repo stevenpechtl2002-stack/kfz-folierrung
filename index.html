@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <style>
     :root {
       --red: #e63946;
@@ -221,7 +222,17 @@
     .v-item p { font-size: .85rem; color: rgba(255,255,255,.4); line-height: 1.6; }
 
     /* ══ ABOUT ══ */
-    #ueber-uns { background: var(--bg2); }
+    #ueber-uns { background: #0a0a0a; position: relative; }
+    #ueber-uns-canvas {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      pointer-events: none; z-index: 0;
+    }
+    #ueber-uns .container { position: relative; z-index: 1; }
+    #ueber-uns .s-title { color: #fff; }
+    #ueber-uns .about-text p { color: rgba(255,255,255,.5); }
+    #ueber-uns .about-check { color: rgba(255,255,255,.85); }
+    #ueber-uns .about-img2 { border-color: #0a0a0a; }
     .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
     .about-imgs { position: relative; padding-bottom: 3rem; padding-right: 3rem; }
     .about-img1 { width: 85%; aspect-ratio: 3/4; object-fit: cover; border-radius: 24px; display: block; box-shadow: 0 30px 80px rgba(0,0,0,.15); }
@@ -579,6 +590,7 @@
 
 <!-- ÜBER UNS -->
 <section id="ueber-uns">
+  <canvas id="ueber-uns-canvas"></canvas>
   <div class="container">
     <div class="about-grid">
       <div class="about-imgs">
@@ -848,6 +860,106 @@
     card.addEventListener('mouseenter', () => gsap.to(card.querySelector('.sv-num'), { opacity:1, duration:.3 }));
     card.addEventListener('mouseleave', () => gsap.to(card.querySelector('.sv-num'), { opacity:.6, duration:.3 }));
   });
+
+  // ── ÜBER UNS SHADER BACKGROUND ──
+  (function() {
+    const canvas = document.getElementById('ueber-uns-canvas');
+    const section = document.getElementById('ueber-uns');
+
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 10);
+    camera.position.z = 1;
+
+    const vertexShader = `
+      uniform float time;
+      uniform float intensity;
+      varying vec2 vUv;
+      void main() {
+        vUv = uv;
+        vec3 pos = position;
+        pos.y += sin(pos.x * 10.0 + time) * 0.1 * intensity;
+        pos.x += cos(pos.y * 8.0 + time * 1.5) * 0.05 * intensity;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+      }
+    `;
+
+    const fragmentShader = `
+      uniform float time;
+      uniform float intensity;
+      uniform vec3 color1;
+      uniform vec3 color2;
+      varying vec2 vUv;
+      void main() {
+        vec2 uv = vUv;
+        float noise = sin(uv.x * 20.0 + time) * cos(uv.y * 15.0 + time * 0.8);
+        noise += sin(uv.x * 35.0 - time * 2.0) * cos(uv.y * 25.0 + time * 1.2) * 0.5;
+        vec3 color = mix(color1, color2, noise * 0.5 + 0.5);
+        color = mix(color, vec3(1.0), pow(abs(noise), 2.0) * intensity * 0.3);
+        float glow = 1.0 - length(uv - 0.5) * 1.6;
+        glow = pow(max(glow, 0.0), 2.0);
+        gl_FragColor = vec4(color * glow, glow * 0.75);
+      }
+    `;
+
+    const uniforms = {
+      time: { value: 0 },
+      intensity: { value: 1.0 },
+      color1: { value: new THREE.Color('#e63946') },
+      color2: { value: new THREE.Color('#0a0a0a') },
+    };
+
+    const planeMat = new THREE.ShaderMaterial({
+      uniforms, vertexShader, fragmentShader,
+      transparent: true, side: THREE.DoubleSide,
+    });
+    const plane = new THREE.Mesh(new THREE.PlaneGeometry(2, 2, 32, 32), planeMat);
+    scene.add(plane);
+
+    // Energy rings
+    const rings = [];
+    [[0.55, 0, 0], [-0.55, 0, 0], [0, 0.3, 0]].forEach(([x, y, z], i) => {
+      const r = 0.35 + i * 0.12;
+      const geo = new THREE.RingGeometry(r * 0.8, r, 64);
+      const mat = new THREE.MeshBasicMaterial({
+        color: '#e63946', transparent: true, opacity: 0.35, side: THREE.DoubleSide,
+      });
+      const mesh = new THREE.Mesh(geo, mat);
+      mesh.position.set(x, y, z);
+      scene.add(mesh);
+      rings.push({ mesh, mat, speed: 0.4 + i * 0.3 });
+    });
+
+    function resize() {
+      const w = section.offsetWidth;
+      const h = section.offsetHeight;
+      renderer.setSize(w, h);
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    let active = false;
+    const obs = new IntersectionObserver(entries => {
+      active = entries[0].isIntersecting;
+    }, { threshold: 0.1 });
+    obs.observe(section);
+
+    const clock = new THREE.Clock();
+    (function animate() {
+      requestAnimationFrame(animate);
+      if (!active) return;
+      const t = clock.getElapsedTime();
+      uniforms.time.value = t;
+      uniforms.intensity.value = 1.0 + Math.sin(t * 2) * 0.3;
+      rings.forEach(({ mesh, mat, speed }, i) => {
+        mesh.rotation.z = t * speed;
+        mat.opacity = 0.2 + Math.sin(t * 3 + i) * 0.15;
+      });
+      renderer.render(scene, camera);
+    })();
+  })();
 
   // ── GLOW CARDS ──
   document.querySelectorAll('.sv-card').forEach(card => {
