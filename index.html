@@ -452,6 +452,42 @@
     .ic-labels { display: flex; justify-content: space-between; margin-top: 1.2rem; padding: 0 .5rem; }
     .ic-label { font-size: .68rem; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,.35); font-weight: 500; }
 
+    /* ══ BG PATTERN ══ */
+    .bp {
+      position: absolute; inset: 0; pointer-events: none; z-index: 0;
+    }
+    /* variants */
+    .bp-grid {
+      background-image:
+        linear-gradient(to right, var(--bp-fill, rgba(255,255,255,.04)) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--bp-fill, rgba(255,255,255,.04)) 1px, transparent 1px);
+      background-size: var(--bp-size, 32px) var(--bp-size, 32px);
+    }
+    .bp-dots {
+      background-image: radial-gradient(var(--bp-fill, rgba(255,255,255,.06)) 1px, transparent 1px);
+      background-size: var(--bp-size, 28px) var(--bp-size, 28px);
+    }
+    .bp-diagonal {
+      background-image: repeating-linear-gradient(
+        45deg,
+        var(--bp-fill, rgba(255,255,255,.03)),
+        var(--bp-fill, rgba(255,255,255,.03)) 1px,
+        transparent 1px,
+        transparent var(--bp-size, 24px)
+      );
+    }
+    .bp-hlines {
+      background-image: linear-gradient(to bottom, var(--bp-fill, rgba(255,255,255,.04)) 1px, transparent 1px);
+      background-size: 100% var(--bp-size, 32px);
+    }
+    /* masks */
+    .bp-fade-edges  { mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%); }
+    .bp-fade-center { mask-image: radial-gradient(ellipse at center, transparent 20%, black 70%); }
+    .bp-fade-top    { mask-image: linear-gradient(to bottom, transparent, black 60%); }
+    .bp-fade-bottom { mask-image: linear-gradient(to bottom, black 40%, transparent); }
+    .bp-fade-y      { mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent); }
+    .bp-fade-x      { mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent); }
+
     /* ══ FOOTER ══ */
     footer { background: #080808; padding: 5rem 5rem 2.5rem; }
     .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 4rem; }
@@ -658,8 +694,9 @@
 </div>
 
 <!-- LEISTUNGEN -->
-<section id="leistungen">
-  <div class="container">
+<section id="leistungen" style="position:relative;overflow:hidden">
+  <div class="bp bp-dots bp-fade-edges" style="--bp-fill:rgba(74,222,128,.05);--bp-size:28px"></div>
+  <div class="container" style="position:relative;z-index:1">
     <div class="services-top">
       <div>
         <div class="s-eyebrow"><div class="s-eyebrow-line"></div><span class="s-label">Was wir anbieten</span></div>
@@ -705,8 +742,9 @@
 </section>
 
 <!-- BEWERTUNGEN -->
-<section id="bewertungen">
-  <div class="container">
+<section id="bewertungen" style="position:relative;overflow:hidden">
+  <div class="bp bp-grid bp-fade-y" style="--bp-fill:rgba(255,255,255,.03);--bp-size:40px"></div>
+  <div class="container" style="position:relative;z-index:1">
     <div class="rev-head">
       <div>
         <div class="s-eyebrow"><div class="s-eyebrow-line"></div><span class="s-label">Kundenstimmen</span></div>
@@ -807,6 +845,7 @@
 
 <!-- ÜBER UNS -->
 <section id="ueber-uns">
+  <div class="bp bp-diagonal bp-fade-x" style="--bp-fill:rgba(74,222,128,.04);--bp-size:20px"></div>
   <div class="container">
     <div class="about-grid">
       <div class="about-imgs">
@@ -886,8 +925,9 @@
 </section>
 
 <!-- TERMIN -->
-<section id="termin">
-  <div class="container">
+<section id="termin" style="position:relative;overflow:hidden">
+  <div class="bp bp-grid bp-fade-edges" style="--bp-fill:rgba(74,222,128,.04);--bp-size:32px"></div>
+  <div class="container" style="position:relative;z-index:1">
     <div class="booking-grid">
       <div class="booking-left">
         <div class="s-eyebrow"><div class="s-eyebrow-line"></div><span class="s-label">Terminbuchung</span></div>
@@ -918,8 +958,9 @@
 </section>
 
 <!-- STANDORT -->
-<section id="standort">
-  <div class="container">
+<section id="standort" style="position:relative;overflow:hidden">
+  <div class="bp bp-hlines bp-fade-x" style="--bp-fill:rgba(255,255,255,.03);--bp-size:36px"></div>
+  <div class="container" style="position:relative;z-index:1">
     <div class="standort-grid">
       <div class="hours-section">
         <div class="s-eyebrow"><div class="s-eyebrow-line"></div><span class="s-label">Öffnungszeiten & Standort</span></div>
