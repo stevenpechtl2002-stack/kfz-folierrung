@@ -361,14 +361,14 @@
     /* ══ GALLERY ══ */
     #galerie { background: #080808; padding: 6rem 5rem; }
     .gallery-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2.5rem; }
-    .gallery-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; grid-template-rows: 240px 240px; gap: 1rem; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 230px; gap: 1rem; }
     .g-img { border-radius: 18px; overflow: hidden; position: relative; }
     .g-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .6s cubic-bezier(.4,0,.2,1); }
     .g-img::after { content:''; position:absolute; inset:0; background:rgba(0,0,0,.2); opacity:0; transition:opacity .4s; border-radius:18px; }
     .g-img:hover img { transform: scale(1.08); }
     .g-img:hover::after { opacity: 1; }
-    .g-img.span2 { grid-row: span 2; }
-    .g-img.span2 img { height: 100%; }
+    .g-img.wide { grid-column: span 2; }
+    .g-img.tall { grid-row: span 2; }
 
     /* ══ BOOKING ══ */
     #termin { background: #0d0d0d; }
@@ -531,9 +531,9 @@
       .about-grid, .booking-grid, .standort-grid, .vorteile-grid { grid-template-columns: 1fr; gap: 3rem; }
       .footer-top { grid-template-columns: 1fr 1fr; }
       .rev-head { padding: 0 2.5rem; }
-      .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
-      .g-img.span2 { grid-row: span 1; }
-      .g-img.span2 img, .g-img img { height: 220px; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 200px; }
+      .g-img.wide { grid-column: span 2; }
+      .g-img.tall { grid-row: span 1; }
     }
     @media (max-width: 640px) {
       section { padding: 4rem 1.5rem; }
@@ -545,7 +545,8 @@
       .hstat { padding: 0 1.5rem; }
       .footer-top { grid-template-columns: 1fr; }
       .hero-h1 { letter-spacing: -2px; font-size: clamp(2.8rem, 10vw, 5rem); }
-      .gallery-grid { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: 1fr; grid-auto-rows: 200px; }
+      .g-img.wide { grid-column: span 1; }
       .rev-head { padding: 0 1.5rem; }
     }
 
@@ -860,8 +861,8 @@
   <div class="container">
     <div class="about-grid">
       <div class="about-imgs">
-        <img class="about-img1" src="https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&q=85" alt="Fahrzeugfolierung" />
-        <img class="about-img2" src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=500&q=85" alt="Sportauto" />
+        <img class="about-img1" src="Bildschirmfoto 2026-04-28 um 23.56.27-9.jpeg" alt="Ferrari SF90 bei Daglioglu Lackierungen" />
+        <img class="about-img2" src="Bildschirmfoto 2026-04-28 um 23.56.04.jpeg" alt="Lamborghini Urus matt foliert" />
         <div class="about-badge-float"><strong>10</strong><span>Jahre Erfahrung</span></div>
       </div>
       <div class="about-text">
@@ -926,16 +927,22 @@
       </div>
     </div>
     <div class="gallery-grid">
-      <!-- FOTO 1: Großes Bild links (hochkant, 2 Zeilen) – z.B. Vollfolierung Gesamtansicht -->
-      <div class="g-img span2"><img src="https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=900&q=85" alt="Fahrzeugfolierung" loading="lazy" /></div>
-      <!-- FOTO 2: Oben rechts – z.B. Detailaufnahme Folie -->
-      <div class="g-img"><img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=600&q=85" alt="Sportwagen Folierung" loading="lazy" /></div>
-      <!-- FOTO 3: Unten rechts oben – z.B. PPF oder Teilfolierung -->
-      <div class="g-img"><img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=600&q=85" alt="Auto Folierung Detail" loading="lazy" /></div>
-      <!-- FOTO 4: Unten links – z.B. Werbebeschriftung oder Carbon -->
-      <div class="g-img"><img src="https://images.unsplash.com/photo-1614026480209-cd9934144671?w=600&q=85" alt="Folie Detail" loading="lazy" /></div>
-      <!-- FOTO 5: Unten rechts unten – z.B. fertiges Ergebnis -->
-      <div class="g-img"><img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=600&q=85" alt="Fahrzeug nach Folierung" loading="lazy" /></div>
+      <!-- Reihe 1 -->
+      <div class="g-img wide"><img src="Bildschirmfoto 2026-04-28 um 23.56.04.jpeg" alt="Lamborghini Urus matt foliert" loading="lazy" /></div>
+      <div class="g-img"><img src="Bildschirmfoto 2026-04-28 um 23.56.06-1.jpeg" alt="Mercedes G63 AMG schwarz" loading="lazy" /></div>
+      <!-- Reihe 2 -->
+      <div class="g-img"><img src="Bildschirmfoto 2026-04-28 um 23.56.08-2.jpeg" alt="Ferrari Purosangue schwarz" loading="lazy" /></div>
+      <div class="g-img wide"><img src="Bildschirmfoto 2026-04-28 um 23.56.11-3.jpeg" alt="Ferrari 12Cilindri Spider rot" loading="lazy" /></div>
+      <!-- Reihe 3 -->
+      <div class="g-img"><img src="Bildschirmfoto 2026-04-28 um 23.56.13-4.jpeg" alt="Audi R8 V10 Spyder grau" loading="lazy" /></div>
+      <div class="g-img"><img src="Bildschirmfoto 2026-04-28 um 23.56.16-5.jpeg" alt="Ferrari 488 GTB rot" loading="lazy" /></div>
+      <div class="g-img"><img src="Bildschirmfoto 2026-04-28 um 23.56.19-6.jpeg" alt="Ducati Panigale rot" loading="lazy" /></div>
+      <!-- Reihe 4 -->
+      <div class="g-img wide"><img src="Bildschirmfoto 2026-04-28 um 23.56.21-7.jpeg" alt="Lamborghini Urus Performante gelb" loading="lazy" /></div>
+      <div class="g-img"><img src="Bildschirmfoto 2026-04-28 um 23.56.25-8.jpeg" alt="Mercedes S63 AMG matt schwarz" loading="lazy" /></div>
+      <!-- Reihe 5 -->
+      <div class="g-img"><img src="Bildschirmfoto 2026-04-28 um 23.56.27-9.jpeg" alt="Ferrari SF90 schwarz" loading="lazy" /></div>
+      <div class="g-img wide"><img src="Bildschirmfoto 2026-04-28 um 23.56.30-10.jpeg" alt="Porsche 911 GT3 grau" loading="lazy" /></div>
     </div>
   </div>
 </section>
