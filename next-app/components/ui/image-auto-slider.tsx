@@ -2,14 +2,17 @@ import React from 'react';
 
 export const Component = () => {
   const images = [
-    "https://picsum.photos/seed/car1/800/600",
-    "https://picsum.photos/seed/car2/800/600",
-    "https://picsum.photos/seed/car3/800/600",
-    "https://picsum.photos/seed/car4/800/600",
-    "https://picsum.photos/seed/car5/800/600",
-    "https://picsum.photos/seed/car6/800/600",
-    "https://picsum.photos/seed/car7/800/600",
-    "https://picsum.photos/seed/car8/800/600",
+    "/gallery/lambo-urus-matt.jpeg",
+    "/gallery/mercedes-g63.jpeg",
+    "/gallery/ferrari-purosangue.jpeg",
+    "/gallery/ferrari-12cilindri.jpeg",
+    "/gallery/audi-r8.jpeg",
+    "/gallery/ferrari-488.jpeg",
+    "/gallery/ducati-panigale.jpeg",
+    "/gallery/lambo-urus-gelb.jpeg",
+    "/gallery/mercedes-s63-matt.jpeg",
+    "/gallery/ferrari-sf90.jpeg",
+    "/gallery/porsche-911-gt3.jpeg",
   ];
 
   const duplicatedImages = [...images, ...images];
