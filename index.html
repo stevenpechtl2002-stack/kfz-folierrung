@@ -164,6 +164,29 @@
     .ticker-track .dot { color: rgba(74,222,128,.35); font-size: .5rem; vertical-align: middle; }
     @keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 
+    /* ══ IMAGE SLIDER ══ */
+    .img-slider { background: #080808; padding: 4rem 0; overflow: hidden; }
+    .img-slider-mask {
+      -webkit-mask: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+      mask: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+    }
+    .img-slider-track {
+      display: flex; gap: 1rem; width: max-content;
+      animation: imgSlide 35s linear infinite;
+    }
+    .img-slider-track:hover { animation-play-state: paused; }
+    @keyframes imgSlide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .img-slide-item {
+      width: 320px; height: 220px; border-radius: 16px;
+      overflow: hidden; flex-shrink: 0; position: relative;
+    }
+    .img-slide-item img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform .5s ease;
+    }
+    .img-slide-item:hover img { transform: scale(1.06); }
+    @media (max-width: 640px) { .img-slide-item { width: 240px; height: 165px; } }
+
     /* ══ SECTIONS ══ */
     section { padding: 8rem 5rem; }
     .container { max-width: 1200px; margin: 0 auto; }
@@ -705,6 +728,37 @@
     <span>Lackschutzfolie</span><span class="dot">✦</span>
     <span>Carbon-Optik</span><span class="dot">✦</span>
     <span>Dachfolierung</span><span class="dot">✦</span>
+  </div>
+</div>
+
+<!-- IMAGE SLIDER -->
+<div class="img-slider">
+  <div class="img-slider-mask">
+    <div class="img-slider-track">
+      <div class="img-slide-item"><img src="Bildschirmfoto 2026-04-28 um 23.56.04.jpeg" alt="Lamborghini Urus matt" loading="lazy" /></div>
+      <div class="img-slide-item"><img src="Bildschirmfoto 2026-04-28 um 23.56.06-1.jpeg" alt="Mercedes G63 AMG" loading="lazy" /></div>
+      <div class="img-slide-item"><img src="Bildschirmfoto 2026-04-28 um 23.56.08-2.jpeg" alt="Ferrari Purosangue" loading="lazy" /></div>
+      <div class="img-slide-item"><img src="Bildschirmfoto 2026-04-28 um 23.56.11-3.jpeg" alt="Ferrari 12Cilindri Spider" loading="lazy" /></div>
+      <div class="img-slide-item"><img src="Bildschirmfoto 2026-04-28 um 23.56.13-4.jpeg" alt="Audi R8 V10 Spyder" loading="lazy" /></div>
+      <div class="img-slide-item"><img src="Bildschirmfoto 2026-04-28 um 23.56.16-5.jpeg" alt="Ferrari 488 GTB" loading="lazy" /></div>
+      <div class="img-slide-item"><img src="Bildschirmfoto 2026-04-28 um 23.56.19-6.jpeg" alt="Ducati Panigale" loading="lazy" /></div>
+      <div class="img-slide-item"><img src="Bildschirmfoto 2026-04-28 um 23.56.21-7.jpeg" alt="Lamborghini Urus gelb" loading="lazy" /></div>
+      <div class="img-slide-item"><img src="Bildschirmfoto 2026-04-28 um 23.56.25-8.jpeg" alt="Mercedes S63 AMG matt" loading="lazy" /></div>
+      <div class="img-slide-item"><img src="Bildschirmfoto 2026-04-28 um 23.56.27-9.jpeg" alt="Ferrari SF90" loading="lazy" /></div>
+      <div class="img-slide-item"><img src="Bildschirmfoto 2026-04-28 um 23.56.30-10.jpeg" alt="Porsche 911 GT3" loading="lazy" /></div>
+      <!-- duplicate for seamless loop -->
+      <div class="img-slide-item"><img src="Bildschirmfoto 2026-04-28 um 23.56.04.jpeg" alt="Lamborghini Urus matt" loading="lazy" /></div>
+      <div class="img-slide-item"><img src="Bildschirmfoto 2026-04-28 um 23.56.06-1.jpeg" alt="Mercedes G63 AMG" loading="lazy" /></div>
+      <div class="img-slide-item"><img src="Bildschirmfoto 2026-04-28 um 23.56.08-2.jpeg" alt="Ferrari Purosangue" loading="lazy" /></div>
+      <div class="img-slide-item"><img src="Bildschirmfoto 2026-04-28 um 23.56.11-3.jpeg" alt="Ferrari 12Cilindri Spider" loading="lazy" /></div>
+      <div class="img-slide-item"><img src="Bildschirmfoto 2026-04-28 um 23.56.13-4.jpeg" alt="Audi R8 V10 Spyder" loading="lazy" /></div>
+      <div class="img-slide-item"><img src="Bildschirmfoto 2026-04-28 um 23.56.16-5.jpeg" alt="Ferrari 488 GTB" loading="lazy" /></div>
+      <div class="img-slide-item"><img src="Bildschirmfoto 2026-04-28 um 23.56.19-6.jpeg" alt="Ducati Panigale" loading="lazy" /></div>
+      <div class="img-slide-item"><img src="Bildschirmfoto 2026-04-28 um 23.56.21-7.jpeg" alt="Lamborghini Urus gelb" loading="lazy" /></div>
+      <div class="img-slide-item"><img src="Bildschirmfoto 2026-04-28 um 23.56.25-8.jpeg" alt="Mercedes S63 AMG matt" loading="lazy" /></div>
+      <div class="img-slide-item"><img src="Bildschirmfoto 2026-04-28 um 23.56.27-9.jpeg" alt="Ferrari SF90" loading="lazy" /></div>
+      <div class="img-slide-item"><img src="Bildschirmfoto 2026-04-28 um 23.56.30-10.jpeg" alt="Porsche 911 GT3" loading="lazy" /></div>
+    </div>
   </div>
 </div>
 
