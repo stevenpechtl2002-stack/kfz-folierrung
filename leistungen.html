@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leistungen – Kfz Lackierung Daglioglu Karlsruhe</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <meta name="description" content="Unsere Leistungen: Unfalllackierung, Neulackierung, Teillackierung, Versicherungsschäden, Smart Repair, Felgenlackierung & mehr. Kfz Lackierung Daglioglu Karlsruhe." />
+  <meta name="robots" content="index, follow" />
+  <style>
+    :root {
+      --red: #4ade80;
+      --red-dark: #22c55e;
+      --red-glow: rgba(74,222,128,.25);
+      --bg: #0d0d0d;
+      --bg2: #111111;
+      --card: #161616;
+      --border: #242424;
+      --text: #f0f0f0;
+      --muted: #888888;
+    }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', system-ui, sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; font-size: 17px; font-weight: 300; }
+    h1,h2,h3,h4 { font-family: 'Cormorant', Georgia, serif; font-weight: 500; letter-spacing: .02em; }
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-thumb { background: var(--red-dark); border-radius: 2px; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.5rem 5rem;
+      transition: all .5s cubic-bezier(.4,0,.2,1);
+    }
+    nav.scrolled {
+      padding: .9rem 5rem;
+      background: rgba(10,10,10,.92);
+      backdrop-filter: blur(24px) saturate(180%);
+      border-bottom: 1px solid #242424;
+      box-shadow: 0 4px 30px rgba(0,0,0,.4);
+    }
+    .logo { font-size: 1.5rem; font-weight: 400; color: #fff; text-decoration: none; letter-spacing: .1em; text-transform: uppercase; display: flex; align-items: center; gap: .5rem; font-family: 'Cormorant', Georgia, serif; }
+    .logo-icon { width: 32px; height: 32px; background: var(--red); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: .9rem; }
+    .logo em { color: var(--red); font-style: italic; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,.6); text-decoration: none; font-size: .72rem; font-weight: 400; letter-spacing: 2.5px; text-transform: uppercase; transition: color .3s; position: relative; }
+    .nav-links a::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:2px; background:var(--red); transition:width .3s; border-radius:2px; }
+    .nav-links a:hover, .nav-links a.active { color: #fff; }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+    .nav-right { display: flex; align-items: center; gap: 1rem; }
+    .nav-phone { color: rgba(255,255,255,.6); font-size: .82rem; font-weight: 600; text-decoration: none; transition: color .3s; }
+    .nav-phone:hover { color: var(--red) !important; }
+    .nav-btn { background: var(--red); color: #fff; border: none; padding: .65rem 1.8rem; border-radius: 2px; font-size: .68rem; font-weight: 500; cursor: pointer; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; transition: all .25s; box-shadow: 0 4px 16px var(--red-glow); font-family: inherit; }
+    .nav-btn:hover { background: var(--red-dark); transform: translateY(-2px); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 6px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: #fff; border-radius: 2px; transition: all .35s; transform-origin: center; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .nav-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.55); z-index: 205; opacity: 0; pointer-events: none; transition: opacity .4s; backdrop-filter: blur(4px); }
+    .nav-overlay.open { opacity: 1; pointer-events: all; }
+    .nav-drawer { position: fixed; top: 0; right: -100%; width: 85%; max-width: 300px; height: 100vh; background: #0d0d0d; z-index: 210; padding: 5.5rem 2.5rem 3rem; transition: right .4s cubic-bezier(.4,0,.2,1); display: flex; flex-direction: column; border-left: 1px solid rgba(255,255,255,.06); }
+    .nav-drawer.open { right: 0; }
+    .drawer-links { list-style: none; display: flex; flex-direction: column; }
+    .drawer-links li { border-bottom: 1px solid rgba(255,255,255,.06); }
+    .drawer-links a { display: block; padding: 1.1rem 0; color: rgba(255,255,255,.7); text-decoration: none; font-size: 1.05rem; font-weight: 700; transition: all .2s; }
+    .drawer-links a:hover { color: #fff; padding-left: 6px; }
+    .drawer-cta { margin-top: 1.5rem; background: var(--red); color: #fff; border: none; padding: .9rem; border-radius: 14px; font-size: .92rem; font-weight: 800; cursor: pointer; text-decoration: none; text-align: center; display: block; font-family: inherit; }
+    .drawer-phone-link { margin-top: 1rem; color: rgba(255,255,255,.45); font-size: .88rem; font-weight: 600; text-decoration: none; display: block; text-align: center; }
+
+    /* HERO */
+    .page-hero {
+      padding: 160px 5rem 100px;
+      background: #080808;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      top: -200px; right: -200px;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(74,222,128,.12) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .page-hero-inner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
+    .back-link { display: inline-flex; align-items: center; gap: .5rem; color: rgba(255,255,255,.4); font-size: .78rem; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; margin-bottom: 2rem; transition: color .2s; }
+    .back-link:hover { color: var(--red); }
+    .back-link svg { transition: transform .2s; }
+    .back-link:hover svg { transform: translateX(-4px); }
+    .page-hero h1 { font-size: clamp(3rem, 6vw, 6rem); font-weight: 300; line-height: 1.05; color: #fff; letter-spacing: .03em; }
+    .page-hero h1 em { color: var(--red); font-style: italic; }
+    .page-hero p { color: rgba(255,255,255,.45); font-size: 1.05rem; line-height: 1.85; max-width: 560px; margin-top: 1.5rem; }
+    .hero-badges { display: flex; gap: .75rem; margin-top: 2rem; flex-wrap: wrap; }
+    .hero-badge { display: inline-flex; align-items: center; gap: .5rem; background: rgba(74,222,128,.1); border: 1px solid rgba(74,222,128,.2); color: var(--red); padding: .45rem 1rem; border-radius: 50px; font-size: .78rem; font-weight: 600; }
+
+    /* LEISTUNGEN GRID */
+    .leistungen-section { padding: 8rem 5rem; }
+    .container { max-width: 1200px; margin: 0 auto; }
+    .section-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: end; margin-bottom: 5rem; }
+    .s-eyebrow { display: flex; align-items: center; gap: .75rem; margin-bottom: .75rem; }
+    .s-eyebrow-line { width: 24px; height: 2px; background: var(--red); border-radius: 2px; }
+    .s-label { color: var(--red); font-size: .68rem; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; }
+    .s-title { font-size: clamp(2.4rem, 3.5vw, 3.6rem); font-weight: 400; line-height: 1.1; color: #fff; }
+    .s-title em { color: var(--red); font-style: italic; }
+    .section-intro p { color: rgba(255,255,255,.45); line-height: 1.9; }
+
+    /* SERVICE CARDS */
+    .service-list { display: flex; flex-direction: column; gap: 1.5rem; }
+    .service-card {
+      background: #111; border: 1px solid #1e1e1e;
+      border-radius: 24px; overflow: hidden;
+      transition: border-color .3s, box-shadow .3s;
+    }
+    .service-card:hover { border-color: rgba(74,222,128,.25); box-shadow: 0 20px 60px rgba(0,0,0,.3); }
+    .service-card-header {
+      display: flex; align-items: center; gap: 2rem;
+      padding: 2.5rem 3rem; cursor: pointer;
+      position: relative;
+    }
+    .service-num { font-size: .72rem; font-weight: 700; color: var(--red); letter-spacing: 1px; opacity: .5; min-width: 28px; }
+    .service-icon-wrap { width: 56px; height: 56px; background: rgba(74,222,128,.1); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; flex-shrink: 0; transition: transform .3s; }
+    .service-card:hover .service-icon-wrap { transform: scale(1.1) rotate(-5deg); }
+    .service-header-text { flex: 1; }
+    .service-header-text h3 { font-size: 1.6rem; font-weight: 400; color: #fff; font-family: 'Cormorant', Georgia, serif; letter-spacing: .04em; margin-bottom: .3rem; }
+    .service-header-text .tagline { font-size: .88rem; color: rgba(255,255,255,.4); font-weight: 300; }
+    .service-price-badge { background: rgba(74,222,128,.12); color: var(--red); padding: .4rem 1rem; border-radius: 50px; font-size: .8rem; font-weight: 700; white-space: nowrap; }
+    .service-toggle { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); color: rgba(255,255,255,.5); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; transition: all .3s; cursor: pointer; }
+    .service-card.open .service-toggle { background: rgba(74,222,128,.15); border-color: rgba(74,222,128,.3); color: var(--red); transform: rotate(45deg); }
+
+    .service-body {
+      max-height: 0; overflow: hidden;
+      transition: max-height .5s cubic-bezier(.4,0,.2,1);
+    }
+    .service-card.open .service-body { max-height: 600px; }
+    .service-body-inner {
+      padding: 0 3rem 2.5rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;
+      border-top: 1px solid rgba(255,255,255,.06);
+      padding-top: 2rem;
+    }
+    .service-desc p { color: rgba(255,255,255,.5); line-height: 1.85; font-size: .93rem; margin-bottom: 1rem; }
+    .service-desc p:last-child { margin-bottom: 0; }
+    .service-details h4 { font-size: .75rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,.3); margin-bottom: 1rem; }
+    .service-check-list { display: flex; flex-direction: column; gap: .6rem; }
+    .service-check { display: flex; align-items: center; gap: .75rem; font-size: .88rem; color: rgba(255,255,255,.7); }
+    .service-check::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--red); flex-shrink: 0; }
+    .service-cta-row { display: flex; gap: .75rem; margin-top: 1.5rem; align-items: center; flex-wrap: wrap; }
+    .btn-green { background: var(--red); color: #fff; border: none; padding: .75rem 1.8rem; border-radius: 6px; font-size: .75rem; font-weight: 600; cursor: pointer; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; display: inline-flex; align-items: center; gap: .5rem; transition: all .25s; box-shadow: 0 8px 24px var(--red-glow); font-family: inherit; }
+    .btn-green:hover { background: var(--red-dark); transform: translateY(-2px); }
+
+    /* CTA BANNER */
+    .cta-banner { background: #080808; padding: 8rem 5rem; }
+    .cta-inner { max-width: 1200px; margin: 0 auto; background: linear-gradient(135deg, rgba(74,222,128,.12), rgba(74,222,128,.04)); border: 1px solid rgba(74,222,128,.2); border-radius: 32px; padding: 5rem; display: grid; grid-template-columns: 1fr auto; gap: 3rem; align-items: center; }
+    .cta-inner h2 { font-size: clamp(2rem, 3.5vw, 3.2rem); font-weight: 400; color: #fff; }
+    .cta-inner h2 em { color: var(--red); font-style: italic; }
+    .cta-inner p { color: rgba(255,255,255,.45); margin-top: .75rem; font-size: .95rem; line-height: 1.8; }
+    .cta-actions { display: flex; flex-direction: column; gap: .75rem; align-items: flex-end; }
+
+    /* FOOTER */
+    footer { background: #080808; padding: 3rem 5rem; border-top: 1px solid rgba(255,255,255,.06); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; font-size: .78rem; color: rgba(255,255,255,.2); flex-wrap: wrap; gap: 1rem; }
+    .footer-bottom a { color: rgba(255,255,255,.3); text-decoration: none; }
+    .footer-bottom a:hover { color: rgba(255,255,255,.7); }
+
+    /* WHATSAPP FAB */
+    .wa-fab { position: fixed; bottom: 2rem; right: 2rem; z-index: 9000; background: #25D366; color: #fff; display: flex; align-items: center; gap: .6rem; padding: .85rem 1.4rem .85rem 1.1rem; border-radius: 50px; text-decoration: none; box-shadow: 0 8px 32px rgba(37,211,102,.4); font-size: .82rem; font-weight: 700; letter-spacing: .3px; transition: all .3s cubic-bezier(.34,1.56,.64,1); }
+    .wa-fab:hover { transform: scale(1.07) translateY(-3px); box-shadow: 0 16px 40px rgba(37,211,102,.55); }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      nav, nav.scrolled { padding-left: 2rem; padding-right: 2rem; }
+      .page-hero { padding: 140px 2.5rem 80px; }
+      .leistungen-section { padding: 5rem 2.5rem; }
+      .section-intro { grid-template-columns: 1fr; gap: 1.5rem; }
+      .service-card-header { padding: 2rem; gap: 1.2rem; }
+      .service-body-inner { grid-template-columns: 1fr; gap: 1.5rem; padding: 1.5rem 2rem 2rem; }
+      .cta-banner { padding: 5rem 2.5rem; }
+      .cta-inner { grid-template-columns: 1fr; gap: 2rem; padding: 3rem; }
+      .cta-actions { align-items: flex-start; }
+      footer { padding: 3rem 2.5rem; }
+    }
+    @media (max-width: 640px) {
+      .nav-links, .nav-phone, .nav-btn { display: none; }
+      .hamburger { display: flex; }
+      .page-hero { padding: 120px 1.5rem 60px; }
+      .leistungen-section { padding: 4rem 1.5rem; }
+      .service-card-header { padding: 1.5rem; flex-wrap: wrap; }
+      .service-price-badge { display: none; }
+      .cta-banner { padding: 4rem 1.5rem; }
+      .cta-inner { padding: 2.5rem 1.5rem; }
+      footer { padding: 2.5rem 1.5rem; }
+      .wa-fab span { display: none; }
+      .wa-fab { padding: .9rem; border-radius: 50%; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="index.html" class="logo">
+    <div class="logo-icon">🎨</div>
+    Daglioglu<em>Lackierung</em>
+  </a>
+  <ul class="nav-links">
+    <li><a href="leistungen.html" class="active">Leistungen</a></li>
+    <li><a href="index.html#ueber-uns">Über uns</a></li>
+    <li><a href="index.html#faq">FAQ</a></li>
+    <li><a href="index.html#bewertungen">Bewertungen</a></li>
+    <li><a href="index.html#standort">Standort</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="tel:+4972194315176" class="nav-phone">+49 721 94315176</a>
+    <a href="index.html#termin" class="nav-btn">Termin buchen</a>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Menü"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="nav-overlay" id="navOverlay"></div>
+<div class="nav-drawer" id="navDrawer">
+  <ul class="drawer-links">
+    <li><a href="leistungen.html" class="drawer-link">Leistungen</a></li>
+    <li><a href="index.html#ueber-uns" class="drawer-link">Über uns</a></li>
+    <li><a href="index.html#faq" class="drawer-link">FAQ</a></li>
+    <li><a href="index.html#bewertungen" class="drawer-link">Bewertungen</a></li>
+    <li><a href="index.html#standort" class="drawer-link">Standort</a></li>
+  </ul>
+  <a href="index.html#termin" class="drawer-cta drawer-link">Termin buchen →</a>
+  <a href="tel:+4972194315176" class="drawer-phone-link">📞 +49 721 94315176</a>
+</div>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <a href="index.html" class="back-link">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
+      Zurück zur Startseite
+    </a>
+    <h1>Unsere<br><em>Leistungen</em></h1>
+    <p>Von der präzisen Unfalllackierung bis zur kompletten Neulackierung – wir bringen jedes Fahrzeug wieder in perfekten Zustand. Professionell, schnell und mit 2 Jahren Garantie.</p>
+    <div class="hero-badges">
+      <span class="hero-badge">✓ 10+ Jahre Erfahrung</span>
+      <span class="hero-badge">✓ 5.0 ★ Google-Bewertung</span>
+      <span class="hero-badge">✓ 2 Jahre Garantie</span>
+      <span class="hero-badge">✓ Alle Fahrzeugmarken</span>
+    </div>
+  </div>
+</div>
+
+<!-- LEISTUNGEN -->
+<section class="leistungen-section">
+  <div class="container">
+    <div class="section-intro">
+      <div>
+        <div class="s-eyebrow"><div class="s-eyebrow-line"></div><span class="s-label">Was wir bieten</span></div>
+        <h2 class="s-title">Alles rund um<br><em>deine Lackierung</em></h2>
+      </div>
+      <p>Klicke auf eine Leistung um mehr Details zu sehen. Bei Fragen stehen wir jederzeit telefonisch oder per WhatsApp zur Verfügung.</p>
+    </div>
+
+    <div class="service-list">
+
+      <!-- 1. UNFALLLACKIERUNG -->
+      <div class="service-card" id="card-1">
+        <div class="service-card-header" onclick="toggleCard('card-1')">
+          <span class="service-num">01</span>
+          <div class="service-icon-wrap">🔧</div>
+          <div class="service-header-text">
+            <h3>Unfalllackierung & Schadensreparatur</h3>
+            <span class="tagline">Unfallschäden, Kratzer, Dellen – fachgerecht behoben</span>
+          </div>
+          <span class="service-price-badge">Auf Anfrage</span>
+          <div class="service-toggle">+</div>
+        </div>
+        <div class="service-body">
+          <div class="service-body-inner">
+            <div class="service-desc">
+              <p>Nach einem Unfall oder Parkschaden sorgen wir dafür, dass dein Fahrzeug wieder aussieht wie vor dem Schaden. Unsere erfahrenen Lackierer arbeiten präzise und verwenden ausschließlich herstellerkonforme Lacke und Materialien.</p>
+              <p>Die Farbe wird exakt auf deinen Fahrzeugton abgemischt – egal ob Metallic, Pearl oder Uni-Lack. Das Ergebnis ist absolut nahtlos und unsichtbar.</p>
+              <div class="service-cta-row">
+                <a href="index.html#termin" class="btn-green">Termin buchen →</a>
+                <a href="tel:+4972194315176" style="color:var(--red);font-size:.85rem;font-weight:600;text-decoration:none;">📞 Jetzt anrufen</a>
+              </div>
+            </div>
+            <div class="service-details">
+              <h4>Leistungsumfang</h4>
+              <div class="service-check-list">
+                <span class="service-check">Karosserieschäden aller Art</span>
+                <span class="service-check">Kratzer & Steinschlagschäden</span>
+                <span class="service-check">Dellen & Beulenbehebung</span>
+                <span class="service-check">Stoßstangen & Anbauteile</span>
+                <span class="service-check">Exakte Farbabmischung</span>
+                <span class="service-check">Versicherungsabwicklung möglich</span>
+                <span class="service-check">2 Jahre Garantie auf die Arbeit</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. NEULACKIERUNG -->
+      <div class="service-card" id="card-2">
+        <div class="service-card-header" onclick="toggleCard('card-2')">
+          <span class="service-num">02</span>
+          <div class="service-icon-wrap">✨</div>
+          <div class="service-header-text">
+            <h3>Komplettlackierung & Neulackierung</h3>
+            <span class="tagline">Dein Fahrzeug in neuem Glanz – komplett oder teilweise</span>
+          </div>
+          <span class="service-price-badge">Ab 1.500 €</span>
+          <div class="service-toggle">+</div>
+        </div>
+        <div class="service-body">
+          <div class="service-body-inner">
+            <div class="service-desc">
+              <p>Ob Farbwechsel, Auffrischung eines verblassten Lacks oder komplette Neulackierung nach Restaurierung – wir lackieren dein Fahrzeug von Grund auf neu. Jedes Detail wird von Hand vorbereitet und behandelt.</p>
+              <p>Wir verwenden 2K-Klarlack der neuesten Generation für maximale Haltbarkeit und Tiefenglanz. Auf Wunsch auch in Sonderfarben oder Spezialfinishes.</p>
+              <div class="service-cta-row">
+                <a href="index.html#termin" class="btn-green">Kostenloses Angebot →</a>
+              </div>
+            </div>
+            <div class="service-details">
+              <h4>Leistungsumfang</h4>
+              <div class="service-check-list">
+                <span class="service-check">Vollständige Fahrzeuglackierung</span>
+                <span class="service-check">Farbwechsel in jede RAL-Farbe</span>
+                <span class="service-check">Metallic, Matt & Sonderfarben</span>
+                <span class="service-check">Professionelle Untergrundvorbereitung</span>
+                <span class="service-check">2K-Klarlack für Tiefenglanz</span>
+                <span class="service-check">Polieren & Aufbereitung inklusive</span>
+                <span class="service-check">2 Jahre Garantie</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. TEILLACKIERUNG -->
+      <div class="service-card" id="card-3">
+        <div class="service-card-header" onclick="toggleCard('card-3')">
+          <span class="service-num">03</span>
+          <div class="service-icon-wrap">🎨</div>
+          <div class="service-header-text">
+            <h3>Teillackierung</h3>
+            <span class="tagline">Einzelne Bauteile perfekt lackiert</span>
+          </div>
+          <span class="service-price-badge">Ab 150 €</span>
+          <div class="service-toggle">+</div>
+        </div>
+        <div class="service-body">
+          <div class="service-body-inner">
+            <div class="service-desc">
+              <p>Stoßstange, Spiegel, Motorhaube, Tür oder Kotflügel – wir lackieren einzelne Bauteile präzise in deinem Fahrzeugton. Die Farbe wird elektronisch ausgelesen und exakt reproduziert.</p>
+              <p>Teillackierungen sind meist schon in 1–2 Werktagen fertig und deutlich günstiger als eine Komplett­reparatur – bei gleichem professionellem Ergebnis.</p>
+              <div class="service-cta-row">
+                <a href="index.html#termin" class="btn-green">Termin buchen →</a>
+              </div>
+            </div>
+            <div class="service-details">
+              <h4>Häufige Bauteile</h4>
+              <div class="service-check-list">
+                <span class="service-check">Stoßstangen vorne & hinten</span>
+                <span class="service-check">Außenspiegel & Spiegelkappen</span>
+                <span class="service-check">Motorhaube & Kofferraum</span>
+                <span class="service-check">Türen & Seitenschweller</span>
+                <span class="service-check">Kotflügel & Dachspoiler</span>
+                <span class="service-check">Alle sonstigen Anbauteile</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. VERSICHERUNGSSCHÄDEN -->
+      <div class="service-card" id="card-4">
+        <div class="service-card-header" onclick="toggleCard('card-4')">
+          <span class="service-num">04</span>
+          <div class="service-icon-wrap">📋</div>
+          <div class="service-header-text">
+            <h3>Versicherungsschäden</h3>
+            <span class="tagline">Wir übernehmen die komplette Abwicklung</span>
+          </div>
+          <span class="service-price-badge">Kostenlos für dich</span>
+          <div class="service-toggle">+</div>
+        </div>
+        <div class="service-body">
+          <div class="service-body-inner">
+            <div class="service-desc">
+              <p>Nach einem Unfall mit Fremdverschulden übernehmen wir die komplette Kommunikation mit der gegnerischen Versicherung. Du musst dich um nichts kümmern – wir erledigen den Papierkram.</p>
+              <p>Auch bei Kaskoschäden unterstützen wir dich mit der nötigen Dokumentation und einem detaillierten Kostenvoranschlag für deine Versicherung.</p>
+              <div class="service-cta-row">
+                <a href="tel:+4972194315176" class="btn-green">Jetzt anrufen →</a>
+              </div>
+            </div>
+            <div class="service-details">
+              <h4>Unser Service</h4>
+              <div class="service-check-list">
+                <span class="service-check">Schadensaufnahme & Dokumentation</span>
+                <span class="service-check">Kostenvoranschlag für Versicherung</span>
+                <span class="service-check">Direktabrechnung mit Versicherung</span>
+                <span class="service-check">Haftpflicht & Kasko</span>
+                <span class="service-check">Leihauto auf Anfrage</span>
+                <span class="service-check">Schnelle Terminvergabe</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. SMART REPAIR -->
+      <div class="service-card" id="card-5">
+        <div class="service-card-header" onclick="toggleCard('card-5')">
+          <span class="service-num">05</span>
+          <div class="service-icon-wrap">⚡</div>
+          <div class="service-header-text">
+            <h3>Smart Repair</h3>
+            <span class="tagline">Kleine Schäden schnell & günstig beheben</span>
+          </div>
+          <span class="service-price-badge">Ab 80 €</span>
+          <div class="service-toggle">+</div>
+        </div>
+        <div class="service-body">
+          <div class="service-body-inner">
+            <div class="service-desc">
+              <p>Smart Repair ist die ideale Lösung für kleine Lackschäden, Kratzer, Steinschläge oder Parkunfälle. Die Reparatur erfolgt punktgenau am beschädigten Bereich – ohne das gesamte Bauteil neu zu lackieren.</p>
+              <p>Viele Smart-Repair-Arbeiten sind noch am selben Tag fertig. Perfekt vor der Leasingrückgabe oder dem Autoverkauf.</p>
+              <div class="service-cta-row">
+                <a href="index.html#termin" class="btn-green">Termin buchen →</a>
+              </div>
+            </div>
+            <div class="service-details">
+              <h4>Anwendungsgebiete</h4>
+              <div class="service-check-list">
+                <span class="service-check">Steinschlagschäden im Lack</span>
+                <span class="service-check">Kratzer & Schürfspuren</span>
+                <span class="service-check">Kleine Dellen ohne Lackverlust</span>
+                <span class="service-check">Parkunfall-Schäden</span>
+                <span class="service-check">Vor Leasingrückgabe</span>
+                <span class="service-check">Vor dem Autoverkauf</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. FELGENLACKIERUNG -->
+      <div class="service-card" id="card-6">
+        <div class="service-card-header" onclick="toggleCard('card-6')">
+          <span class="service-num">06</span>
+          <div class="service-icon-wrap">⭕</div>
+          <div class="service-header-text">
+            <h3>Felgenlackierung</h3>
+            <span class="tagline">Felgen in neuem Glanz – in jeder Farbe</span>
+          </div>
+          <span class="service-price-badge">Ab 60 € / Felge</span>
+          <div class="service-toggle">+</div>
+        </div>
+        <div class="service-body">
+          <div class="service-body-inner">
+            <div class="service-desc">
+              <p>Abgeplatzte, oxidierte oder zerkratzte Felgen werten wir professionell auf. Wir sandstrahlen, grundieren und lackieren deine Felgen in der gewünschten Farbe – von klassischem Schwarz bis hin zu auffälligen Akzentfarben.</p>
+              <p>Auch Aufpreisfarben wie Anthrazit, Bronze, Candy oder Chrom sind möglich. Die Felgen werden mit einem speziellen Felgenlack beschichtet der Hitze, Bremsstaub und Witterung dauerhaft widersteht.</p>
+              <div class="service-cta-row">
+                <a href="index.html#termin" class="btn-green">Angebot anfragen →</a>
+              </div>
+            </div>
+            <div class="service-details">
+              <h4>Leistungsumfang</h4>
+              <div class="service-check-list">
+                <span class="service-check">Sandstrahlen & Entrosten</span>
+                <span class="service-check">Grundierung & Vorlackierung</span>
+                <span class="service-check">Decklack in Wunschfarbe</span>
+                <span class="service-check">Klarlack-Versiegelung</span>
+                <span class="service-check">Alle Felgengrößen & -materialien</span>
+                <span class="service-check">Ablieferung montagebereit</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. LEASINGRÜCKGABE -->
+      <div class="service-card" id="card-7">
+        <div class="service-card-header" onclick="toggleCard('card-7')">
+          <span class="service-num">07</span>
+          <div class="service-icon-wrap">🚗</div>
+          <div class="service-header-text">
+            <h3>Leasingrückgabe & Aufbereitung</h3>
+            <span class="tagline">Fahrzeug optimal für die Rückgabe vorbereiten</span>
+          </div>
+          <span class="service-price-badge">Ab 199 €</span>
+          <div class="service-toggle">+</div>
+        </div>
+        <div class="service-body">
+          <div class="service-body-inner">
+            <div class="service-desc">
+              <p>Vor der Leasingrückgabe entstehen oft hohe Nachforderungen für Lackschäden oder Kratzer. Wir bereiten dein Fahrzeug gezielt vor – günstig repariert ist es deutlich weniger als die Schadenspauschale des Leasinggebers.</p>
+              <p>Viele unserer Stammkunden kommen regelmäßig vor jeder Rückgabe zu uns. Wir schauen uns das Fahrzeug kostenlos an und sagen dir ehrlich was sich lohnt zu reparieren.</p>
+              <div class="service-cta-row">
+                <a href="index.html#termin" class="btn-green">Kostenlose Begutachtung →</a>
+              </div>
+            </div>
+            <div class="service-details">
+              <h4>Unser Vorgehen</h4>
+              <div class="service-check-list">
+                <span class="service-check">Kostenlose Fahrzeugbegutachtung</span>
+                <span class="service-check">Ehrliche Reparaturempfehlung</span>
+                <span class="service-check">Kratzer & Lackschäden beheben</span>
+                <span class="service-check">Stoßstangen & Felgen aufbereiten</span>
+                <span class="service-check">Schnelle Abwicklung in 1–3 Tagen</span>
+                <span class="service-check">Faire & transparente Preise</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-banner">
+  <div class="container">
+    <div class="cta-inner">
+      <div>
+        <h2>Bereit für ein <em>kostenloses Angebot?</em></h2>
+        <p>Ruf uns an oder schreib uns – wir schauen uns deinen Schaden an und nennen dir noch am gleichen Tag einen fairen Preis. Keine versteckten Kosten.</p>
+      </div>
+      <div class="cta-actions">
+        <a href="index.html#termin" class="btn-green" style="font-size:.78rem;padding:1rem 2rem;">Termin buchen →</a>
+        <a href="tel:+4972194315176" style="color:var(--red);font-size:.85rem;font-weight:700;text-decoration:none;text-align:right;">+49 721 94315176</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-bottom">
+    <span>© 2026 Kfz Lackierung Daglioglu</span>
+    <div style="display:flex;gap:1.5rem;">
+      <a href="index.html">Startseite</a>
+      <a href="index.html#standort">Standort</a>
+    </div>
+  </div>
+</footer>
+
+<!-- WHATSAPP FAB -->
+<a href="https://wa.me/4972194315176?text=Hallo%2C%20ich%20interessiere%20mich%20f%C3%BCr%20eine%20Lackierung." class="wa-fab" target="_blank" rel="noopener">
+  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+  <span>WhatsApp</span>
+</a>
+
+<script>
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  function toggleCard(id) {
+    const card = document.getElementById(id);
+    const isOpen = card.classList.contains('open');
+    document.querySelectorAll('.service-card.open').forEach(c => c.classList.remove('open'));
+    if (!isOpen) card.classList.add('open');
+  }
+
+  const hamburger = document.getElementById('hamburger');
+  const navDrawer = document.getElementById('navDrawer');
+  const navOverlay = document.getElementById('navOverlay');
+  function closeDrawer() { hamburger.classList.remove('open'); navDrawer.classList.remove('open'); navOverlay.classList.remove('open'); document.body.style.overflow = ''; }
+  hamburger.addEventListener('click', () => {
+    const isOpen = hamburger.classList.contains('open');
+    isOpen ? closeDrawer() : (hamburger.classList.add('open'), navDrawer.classList.add('open'), navOverlay.classList.add('open'), document.body.style.overflow = 'hidden');
+  });
+  navOverlay.addEventListener('click', closeDrawer);
+  document.querySelectorAll('.drawer-link').forEach(l => l.addEventListener('click', closeDrawer));
+</script>
+</body>
+</html>
