@@ -598,7 +598,12 @@
       footer { padding: 3rem 1.5rem 2rem; }
       nav { padding: 1rem 4rem 1rem 1.5rem; }
       .logo { font-size: 1rem; }
-      .logo-icon { width: 24px; height: 24px; font-size: .75rem; }
+      .logo-icon { display: none; }
+      .hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem 0; }
+      .hstat { padding: 0 1rem; }
+      .hstat:nth-child(odd) { padding-left: 0; }
+      .hstat:not(:nth-child(odd))::after { display: none; }
+      .hstat:nth-child(1)::after, .hstat:nth-child(3)::after { display: block; }
       .nav-links, .nav-phone, .nav-btn { display: none; }
       .hamburger { display: flex; }
 
