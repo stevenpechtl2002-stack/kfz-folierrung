@@ -11,9 +11,9 @@
   <meta name="robots" content="index, follow" />
   <style>
     :root {
-      --red: #4ade80;
-      --red-dark: #22c55e;
-      --red-glow: rgba(74,222,128,.25);
+      --red: #e53e3e;
+      --red-dark: #c53030;
+      --red-glow: rgba(229,62,62,.25);
       --bg: #0d0d0d;
       --bg2: #111111;
       --card: #161616;
@@ -83,7 +83,7 @@
       position: absolute;
       top: -200px; right: -200px;
       width: 700px; height: 700px;
-      background: radial-gradient(circle, rgba(74,222,128,.12) 0%, transparent 65%);
+      background: radial-gradient(circle, rgba(229,62,62,.12) 0%, transparent 65%);
       pointer-events: none;
     }
     .page-hero-inner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
@@ -95,7 +95,7 @@
     .page-hero h1 em { color: var(--red); font-style: italic; }
     .page-hero p { color: rgba(255,255,255,.45); font-size: 1.05rem; line-height: 1.85; max-width: 560px; margin-top: 1.5rem; }
     .hero-badges { display: flex; gap: .75rem; margin-top: 2rem; flex-wrap: wrap; }
-    .hero-badge { display: inline-flex; align-items: center; gap: .5rem; background: rgba(74,222,128,.1); border: 1px solid rgba(74,222,128,.2); color: var(--red); padding: .45rem 1rem; border-radius: 50px; font-size: .78rem; font-weight: 600; }
+    .hero-badge { display: inline-flex; align-items: center; gap: .5rem; background: rgba(229,62,62,.1); border: 1px solid rgba(229,62,62,.2); color: var(--red); padding: .45rem 1rem; border-radius: 50px; font-size: .78rem; font-weight: 600; }
 
     /* LEISTUNGEN GRID */
     .leistungen-section { padding: 8rem 5rem; }
@@ -115,21 +115,21 @@
       border-radius: 24px; overflow: hidden;
       transition: border-color .3s, box-shadow .3s;
     }
-    .service-card:hover { border-color: rgba(74,222,128,.25); box-shadow: 0 20px 60px rgba(0,0,0,.3); }
+    .service-card:hover { border-color: rgba(229,62,62,.25); box-shadow: 0 20px 60px rgba(0,0,0,.3); }
     .service-card-header {
       display: flex; align-items: center; gap: 2rem;
       padding: 2.5rem 3rem; cursor: pointer;
       position: relative;
     }
     .service-num { font-size: .72rem; font-weight: 700; color: var(--red); letter-spacing: 1px; opacity: .5; min-width: 28px; }
-    .service-icon-wrap { width: 56px; height: 56px; background: rgba(74,222,128,.1); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; flex-shrink: 0; transition: transform .3s; }
+    .service-icon-wrap { width: 56px; height: 56px; background: rgba(229,62,62,.1); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; flex-shrink: 0; transition: transform .3s; }
     .service-card:hover .service-icon-wrap { transform: scale(1.1) rotate(-5deg); }
     .service-header-text { flex: 1; }
     .service-header-text h3 { font-size: 1.6rem; font-weight: 400; color: #fff; font-family: 'Cormorant', Georgia, serif; letter-spacing: .04em; margin-bottom: .3rem; }
     .service-header-text .tagline { font-size: .88rem; color: rgba(255,255,255,.4); font-weight: 300; }
-    .service-price-badge { background: rgba(74,222,128,.12); color: var(--red); padding: .4rem 1rem; border-radius: 50px; font-size: .8rem; font-weight: 700; white-space: nowrap; }
+    .service-price-badge { background: rgba(229,62,62,.12); color: var(--red); padding: .4rem 1rem; border-radius: 50px; font-size: .8rem; font-weight: 700; white-space: nowrap; }
     .service-toggle { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); color: rgba(255,255,255,.5); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; transition: all .3s; cursor: pointer; }
-    .service-card.open .service-toggle { background: rgba(74,222,128,.15); border-color: rgba(74,222,128,.3); color: var(--red); transform: rotate(45deg); }
+    .service-card.open .service-toggle { background: rgba(229,62,62,.15); border-color: rgba(229,62,62,.3); color: var(--red); transform: rotate(45deg); }
 
     .service-body {
       max-height: 0; overflow: hidden;
@@ -154,7 +154,7 @@
 
     /* CTA BANNER */
     .cta-banner { background: #080808; padding: 8rem 5rem; }
-    .cta-inner { max-width: 1200px; margin: 0 auto; background: linear-gradient(135deg, rgba(74,222,128,.12), rgba(74,222,128,.04)); border: 1px solid rgba(74,222,128,.2); border-radius: 32px; padding: 5rem; display: grid; grid-template-columns: 1fr auto; gap: 3rem; align-items: center; }
+    .cta-inner { max-width: 1200px; margin: 0 auto; background: linear-gradient(135deg, rgba(229,62,62,.12), rgba(229,62,62,.04)); border: 1px solid rgba(229,62,62,.2); border-radius: 32px; padding: 5rem; display: grid; grid-template-columns: 1fr auto; gap: 3rem; align-items: center; }
     .cta-inner h2 { font-size: clamp(2rem, 3.5vw, 3.2rem); font-weight: 400; color: #fff; }
     .cta-inner h2 em { color: var(--red); font-style: italic; }
     .cta-inner p { color: rgba(255,255,255,.45); margin-top: .75rem; font-size: .95rem; line-height: 1.8; }
