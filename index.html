@@ -562,6 +562,7 @@
     /* ══ RESPONSIVE ══ */
     @media (max-width: 1024px) {
       section { padding: 5rem 2.5rem; }
+      #vorteile, #bewertungen { padding: 5rem 2.5rem; }
       #galerie, #standort, footer { padding-left: 2.5rem; padding-right: 2.5rem; }
       nav, nav.scrolled { padding-left: 2rem; padding-right: 2rem; }
       .hero-inner { padding: 0 2.5rem; padding-top: 100px; }
@@ -577,17 +578,67 @@
     }
     @media (max-width: 640px) {
       section { padding: 4rem 1.5rem; }
+      #vorteile, #bewertungen, #standort, #galerie { padding: 4rem 1.5rem; }
+      footer { padding: 3rem 1.5rem 2rem; }
       nav { padding: 1rem 1.5rem; }
       .nav-links, .nav-phone, .nav-btn { display: none; }
       .hamburger { display: flex; }
+
+      /* Hero */
+      .hero-inner { padding: 0 1.5rem; padding-top: 90px; }
+      .hero-h1 { letter-spacing: -1px; font-size: clamp(2.4rem, 9vw, 4rem); }
+      .hero-sub { font-size: .88rem; max-width: 100%; margin-top: 1.2rem; }
+      .hero-actions { flex-direction: column; gap: .75rem; margin-top: 1.8rem; }
+      .btn-red, .btn-outline-white { width: 100%; text-align: center; justify-content: center; padding: .9rem 1.5rem; }
+      .hero-stats { flex-wrap: wrap; gap: 1.2rem 0; margin-top: 2rem; }
+      .hstat { padding: 0 1.2rem; }
+      .hstat:first-child { padding-left: 0; }
+      .hstat-n { font-size: 2rem; }
+      .hstat-l { font-size: .6rem; }
+      .hero-scroll-ind { display: none; }
+
+      /* Section titles */
+      .s-title { font-size: clamp(1.9rem, 7vw, 2.6rem); }
+
+      /* Services */
       .services-grid { grid-template-columns: 1fr; }
-      .hero-stats { flex-wrap: wrap; gap: 1.5rem 0; }
-      .hstat { padding: 0 1.5rem; }
-      .footer-top { grid-template-columns: 1fr; }
-      .hero-h1 { letter-spacing: -2px; font-size: clamp(2.8rem, 10vw, 5rem); }
+
+      /* Vorteile */
+      .vorteile-big-num { font-size: 5rem; margin-top: 1rem; }
+      .vorteile-grid { gap: 2.5rem; }
+
+      /* About */
+      .about-grid { gap: 2.5rem; }
+      .about-imgs { padding-bottom: 2rem; padding-right: 1.5rem; }
+      .about-badge-float { left: 0; top: 1rem; padding: .75rem 1rem; }
+      .about-badge-float strong { font-size: 1.5rem; }
+
+      /* Reviews */
+      .rev-head { flex-direction: column; align-items: flex-start; gap: 1rem; padding: 0 1.5rem; }
+      .rev-big { font-size: 3.5rem; letter-spacing: -2px; }
+      .testi-cols-wrap { max-height: 480px; }
+      .testi-col { width: 100%; min-width: 0; }
+
+      /* Gallery */
       .gallery-grid { grid-template-columns: 1fr; grid-auto-rows: 200px; }
       .g-img.wide { grid-column: span 1; }
-      .rev-head { padding: 0 1.5rem; }
+
+      /* Booking / Contact */
+      .booking-grid { gap: 2rem; }
+      .booking-widget-box { padding: 2rem 1.5rem; border-radius: 20px; }
+      .booking-widget-box h3 { font-size: 1.6rem; }
+      .c-val { font-size: .85rem; word-break: break-word; }
+
+      /* Map */
+      .map-wrap iframe { height: 260px; }
+      .standort-grid { gap: 2rem; }
+
+      /* Footer */
+      .footer-top { grid-template-columns: 1fr; gap: 2.5rem; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; gap: .75rem; }
+
+      /* Before/After */
+      .ic-btn { width: 36px; height: 36px; }
     }
 
     /* ══ HAMBURGER ══ */
