@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.daglioglulackierung.de/sitemap.xml
+Sitemap: https://daglioglu.vercel.app/sitemap.xml
