@@ -1103,9 +1103,9 @@
   <div class="container" style="position:relative;z-index:1">
     <div class="booking-grid">
       <div class="booking-left">
-        <div class="s-eyebrow"><div class="s-eyebrow-line"></div><span class="s-label">Terminbuchung</span></div>
-        <h2 class="s-title">Termin <em>online</em> buchen</h2>
-        <p>Wähle einen freien Termin für deine Beratung oder Lackierung. Wir melden uns innerhalb von 2 Stunden zur Bestätigung.</p>
+        <div class="s-eyebrow"><div class="s-eyebrow-line"></div><span class="s-label">Buchungsanfrage</span></div>
+        <h2 class="s-title">Anfrage <em>senden</em></h2>
+        <p>Schildere uns kurz dein Fahrzeug und den gewünschten Service – optional mit Fotos. Wir melden uns innerhalb von 2 Stunden mit einem Terminvorschlag und einer Einschätzung.</p>
         <div class="c-items">
           <div class="c-item glow-card"><div class="c-ico">📞</div><div><div class="c-lbl">Telefon</div><div class="c-val">+49 176 66768088</div></div></div>
           <div class="c-item glow-card"><div class="c-ico">✉️</div><div><div class="c-lbl">E-Mail</div><div class="c-val">a.daglioglu@gmx.de</div></div></div>
@@ -1114,7 +1114,70 @@
         </div>
       </div>
       <div style="width:100%;display:flex;justify-content:center;">
-        <iframe src="https://www.zentime.io/embed/kalender/679e838d-fe37-4d02-a362-c19ae0bc4ea7" width="100%" height="720" frameborder="0" style="max-width:480px;border-radius:16px;box-shadow:0 8px 30px rgba(0,0,0,.1)"></iframe>
+        <div class="booking-widget-box" style="max-width:480px;padding:2.75rem 2.5rem;align-items:stretch;text-align:left;">
+          <div class="bwb-glow"></div>
+          <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:.9rem;">
+            <div class="bwb-icon">✉️</div>
+            <h3>Buchungsanfrage</h3>
+            <p style="margin:0 auto;">Alle Felder mit * sind Pflicht. Fotos sind optional, helfen uns aber bei der Einschätzung.</p>
+          </div>
+          <form class="booking-form" action="https://formsubmit.co/stevenpechtl2002@gmail.com" method="POST" enctype="multipart/form-data" style="margin-top:.5rem;">
+            <input type="hidden" name="_subject" value="Neue Buchungsanfrage – daglioglulackierung.de">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_next" value="https://daglioglulackierung.de/danke.html">
+            <input type="text" name="_honey" style="display:none">
+
+            <div class="form-row">
+              <div class="form-field">
+                <label for="bf-name">Name *</label>
+                <input id="bf-name" type="text" name="Name" required>
+              </div>
+              <div class="form-field">
+                <label for="bf-phone">Telefon *</label>
+                <input id="bf-phone" type="tel" name="Telefon" required>
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label for="bf-email">E-Mail *</label>
+              <input id="bf-email" type="email" name="E-Mail" required>
+            </div>
+
+            <div class="form-field">
+              <label for="bf-vehicle">Fahrzeug (Marke, Modell, Baujahr) *</label>
+              <input id="bf-vehicle" type="text" name="Fahrzeug" placeholder="z. B. VW Golf 7, 2018" required>
+            </div>
+
+            <div class="form-field">
+              <label for="bf-service">Gewünschter Service *</label>
+              <select id="bf-service" name="Gewünschter Service" required>
+                <option value="" disabled selected>Bitte wählen …</option>
+                <option>Unfalllackierung &amp; Schadensreparatur</option>
+                <option>Komplettlackierung &amp; Neulackierung</option>
+                <option>Teillackierung</option>
+                <option>Versicherungsschaden</option>
+                <option>Smart Repair</option>
+                <option>Felgenlackierung</option>
+                <option>Leasingrückgabe &amp; Aufbereitung</option>
+                <option>Sonstiges / Beratung</option>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <label for="bf-msg">Was möchtest du machen lassen? *</label>
+              <textarea id="bf-msg" name="Nachricht" placeholder="Beschreibe kurz den Umfang, betroffene Stellen, Wunschtermin …" required></textarea>
+            </div>
+
+            <div class="form-field">
+              <label for="bf-photos">Fotos vom Fahrzeug (optional)</label>
+              <input id="bf-photos" type="file" name="attachment" accept="image/*" multiple>
+            </div>
+
+            <button type="submit" class="bw-btn" style="margin-top:.5rem;">Anfrage senden</button>
+            <p class="form-privacy">Mit dem Absenden stimmst du der Verarbeitung deiner Angaben zur Bearbeitung der Anfrage zu.</p>
+          </form>
+        </div>
       </div>
     </div>
   </div>
