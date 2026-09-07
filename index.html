@@ -1164,6 +1164,23 @@
               </select>
             </div>
 
+            <div class="form-row">
+              <div class="form-field">
+                <label for="bf-date">Gewünschtes Datum</label>
+                <input id="bf-date" type="date" name="Wunschdatum" style="color-scheme:dark;">
+              </div>
+              <div class="form-field">
+                <label for="bf-time">Gewünschter Zeitraum</label>
+                <select id="bf-time" name="Wunschzeitraum">
+                  <option value="" disabled selected>Bitte wählen …</option>
+                  <option>Vormittags (08–12 Uhr)</option>
+                  <option>Nachmittags (12–17 Uhr)</option>
+                  <option>Samstag (09–14 Uhr)</option>
+                  <option>Flexibel / nach Absprache</option>
+                </select>
+              </div>
+            </div>
+
             <div class="form-field">
               <label for="bf-msg">Was möchtest du machen lassen? *</label>
               <textarea id="bf-msg" name="Nachricht" placeholder="Beschreibe kurz den Umfang, betroffene Stellen, Wunschtermin …" required></textarea>
